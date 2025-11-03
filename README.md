@@ -67,13 +67,13 @@ Dentro da **Sprint 1**, o foco está na **documentação conceitual e técnica d
 - A **definição dos dados** que serão coletados, tratados e armazenados com base na LGPD;  
 - E o **plano inicial de desenvolvimento**, que guiará as próximas sprints rumo a um MVP funcional.
 
+---
+
 ## ⚙️ Requisitos Técnicos e Funcionais
 
 Os **requisitos técnicos e funcionais** definem os elementos essenciais que sustentam a solução YOUVISA, garantindo que a proposta seja tecnicamente viável, escalável e aderente às boas práticas de desenvolvimento de sistemas inteligentes.
 
 Nesta Sprint 1, o foco é apresentar **como a plataforma seria estruturada** para integrar atendimento multicanal, automação de processos e inteligência cognitiva — sem ainda implementar o código, mas mostrando claramente o planejamento e a coerência entre as partes.
-
----
 
 ### 🔧 Requisitos Técnicos
 
@@ -88,8 +88,6 @@ Os principais pilares técnicos incluem:
 - **Segurança e LGPD:** criptografia em trânsito e em repouso, autenticação segura e políticas de retenção de dados.  
 
 Os componentes da solução foram pensados para ser **substituível e escalável**, permitindo evolução futura sem reescrever toda a estrutura.
-
----
 
 ### 💬 Requisitos Funcionais
 
