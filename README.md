@@ -25,13 +25,13 @@ Esta entrega foca em **escopo, arquitetura, fluxos e governança**.
 
 ---
 
-## 🧩 Alinhamento de Escopo e Problema
-O desafio proposto pela **YOUVISA** nasce de uma necessidade real do mercado: a complexidade e o alto volume de processos relacionados à emissão de vistos e serviços consulares.  
-Hoje, boa parte dessas operações depende de atendimentos manuais, troca de e-mails, envio de documentos por diferentes canais e múltiplas etapas de verificação humana.  
-Esse modelo é lento, suscetível a erros e oferece uma experiência fragmentada tanto para o cliente quanto para as equipes internas.
+## 🧭 Alinhamento de Escopo e Problema
 
-A YOUVISA busca modernizar esse cenário por meio de **inteligência cognitiva e automação**, utilizando tecnologias como **Processamento de Linguagem Natural (NLP)**, **RPA (Automação Robótica de Processos)** e **Visão Computacional** para leitura e validação de documentos.  
-A meta é criar um ambiente digital que una empatia, segurança e eficiência — um atendimento que entende o usuário, automatiza o que é repetitivo e sabe quando é hora de chamar um humano.
+O desafio da YOUVISA parte de uma necessidade real: simplificar o processo de emissão de vistos e serviços consulares, que ainda depende fortemente de atendimentos manuais, e-mails e múltiplas verificações humanas.  
+Esse modelo gera lentidão, erros e uma experiência desconectada tanto para o cliente quanto para as equipes internas.
+
+A proposta da YOUVISA é modernizar esse cenário com **inteligência cognitiva e automação**, usando **Processamento de Linguagem Natural (NLP)**, **RPA (Automação Robótica de Processos)** e **Visão Computacional** para validar documentos e otimizar o fluxo de atendimento.  
+O objetivo é criar uma jornada digital mais empática, eficiente e inteligente — um sistema que compreende o usuário, automatiza o repetitivo e sabe o momento certo de acionar o atendimento humano.
 
 Dentro dessa Sprint 1, o grupo definiu um **escopo inicial** que representa o conceito central da plataforma YOUVISA:
 
