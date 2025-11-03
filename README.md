@@ -276,8 +276,8 @@ O planejamento foi elaborado com base no modelo **RACI (Responsible, Accountable
 | Levantamento de Requisitos e Escopo | **Priscilla Oliveira** | **Luana Porto** | Luma Oliveira | Paulo Bernardes |
 | Arquitetura da Solução (Draw.io + Descrição Técnica) | **Luma Oliveira** | **Priscilla Oliveira** | Luana Porto | Paulo Bernardes |
 | Fluxo do Chatbot e NLP | **Paulo Bernardes** | **Luma Oliveira** | Priscilla Oliveira | Luana Porto |
-| Documentação de Segurança e LGPD | **Priscilla Oliveira** | **Luma Oliveira** | Luana Porto | Paulo Bernardes |
-| README e Organização do Repositório GitHub | **Luana Porto** | **Priscilla Oliveira** | Paulo Bernardes | Luma Oliveira |
+| Documentação de Segurança e LGPD | **Priscilla Oliveira** | **Luana Porto** | Paulo Bernardes | Luma Oliveira |
+| README e Organização do Repositório GitHub | **Luana Porto** | **Paulo Bernardes** | Luma Oliveira | Priscilla Oliveira |
 | Revisão Geral e Entrega Final | **Todos os integrantes** | — | — | — |
 
 
