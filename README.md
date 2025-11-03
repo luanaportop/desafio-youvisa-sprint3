@@ -259,23 +259,105 @@ Dessa forma, o atendimento é realmente multicanal — contínuo, sem repetiçõ
 ---
 
 ## 🔐 Segurança e LGPD
-- Princípios de **privacidade por design**, classificação de dados, base legal, retenção e descarte.  
-- Criptografia em trânsito e em repouso, **controle de acesso**, auditoria e gestão de segredos.  
-- Variáveis de ambiente: `.env.example` (**NUNCA** commitar `.env` real).  
-Documento completo: `SECURITY.md`.
-## 📈 Métricas & KPIs (inicial)
-- **Tempo médio de primeira resposta (FRT)**  
-- **Taxa de resolução sem humano (Self-service rate)**  
-- **Taxa de handoff** e **SLA** de atendimento humano  
-- **Precisão de OCR/NLP** e **taxa de falsos positivos** na validação
 
+A segurança da informação e o cumprimento da **Lei Geral de Proteção de Dados (LGPD)** são pilares centrais na concepção da plataforma **YOUVISA**.  
+Como o sistema lida com informações pessoais e documentos sensíveis — como passaportes, fotos e dados de contato —, é essencial garantir que todo o fluxo de dados seja tratado com sigilo, transparência e controle.
 
-## 🔧 Estrutura do repositório
+---
+
+### Princípios de Segurança
+
+As principais diretrizes adotadas incluem:
+
+- **Criptografia de Dados:** todas as informações são protegidas em trânsito (via HTTPS/TLS) e em repouso (banco de dados ou armazenamento cloud).  
+- **Autenticação Segura:** uso de autenticação via tokens (OAuth 2.0 ou JWT) para garantir acesso controlado entre sistemas e usuários.  
+- **Controle de Acesso:** níveis de permissão definidos por função (usuário, atendente, administrador), garantindo que cada perfil acesse apenas o necessário.  
+- **Logs e Auditoria:** todos os acessos e alterações são registrados, permitindo rastreabilidade e conformidade com auditorias internas.  
+- **Backups e Redundância:** cópias regulares e armazenamento seguro em múltiplas zonas para evitar perda de dados.  
+
+---
+
+### Conformidade com a LGPD
+
+Entre as medidas implementadas estão:
+
+- **Consentimento do Usuário:** toda coleta de dados é precedida de uma solicitação de consentimento, explicando a finalidade e o uso das informações.  
+- **Finalidade Específica:** os dados coletados são utilizados apenas para os fins relacionados à solicitação e acompanhamento de vistos, sem compartilhamento indevido.  
+- **Minimização de Dados:** apenas informações estritamente necessárias são coletadas, reduzindo a exposição e os riscos.  
+- **Anonimização e Retenção:** após o encerramento do processo, os dados são anonimizados ou removidos de forma segura, conforme política de retenção.  
+- **Direito ao Esquecimento:** o usuário pode solicitar a exclusão definitiva de seus dados a qualquer momento, em conformidade com o artigo 18 da LGPD.  
+
+---
+
+### Segurança Aplicada ao Chatbot e à Automação
+
+Os módulos de **chatbot, NLP e RPA** seguem a mesma política de segurança:
+
+- O chatbot apenas armazena o **histórico essencial** para manter o contexto da conversa.  
+- O módulo de NLP processa os textos sem expor informações pessoais a serviços externos sem consentimento.  
+- As automações (RPA) executam ações com credenciais seguras e sob auditoria, evitando acesso indevido a sistemas internos.  
+- Todas as integrações com APIs externas (como WhatsApp ou Telegram) utilizam **chaves seguras (API Keys)** protegidas em ambiente de variáveis de sistema.
+
+---
+
+## 🗂️ Plano de Desenvolvimento / RACI / Timeline
+
+Nosso grupo atua de forma integrada, utilizando ferramentas digitais para controle de versões, comunicação e documentação (GitHub, Draw.io, Google Docs).  
+
+O planejamento foi elaborado com base no modelo **RACI (Responsible, Accountable, Consulted e Informed)**, garantindo que cada integrante tenha papéis bem definidos em cada etapa do projeto.
+
+---
+
+### Estrutura de Papéis – Modelo RACI
+
+| Etapa / Entregável | Responsible (Executa) | Accountable (Responsável Final) | Consulted (Colabora) | Informed (Acompanha) |
+|--------------------|----------------------|----------------------------------|----------------------|----------------------|
+| Levantamento de Requisitos e Escopo | **Priscilla Oliveira** | **Luana Porto** | Luma Oliveira | Paulo Bernardes |
+| Arquitetura da Solução (Draw.io + Descrição Técnica) | **Luma Oliveira** | **Priscilla Oliveira** | Luana Porto | Paulo Bernardes |
+| Fluxo do Chatbot e NLP | **Paulo Bernardes** | **Luma Oliveira** | Priscilla Oliveira | Luana Porto |
+| Documentação de Segurança e LGPD | **Priscilla Oliveira** | **Luma Oliveira** | Luana Porto | Paulo Bernardes |
+| README e Organização do Repositório GitHub | **Luana Porto** | **Priscilla Oliveira** | Paulo Bernardes | Luma Oliveira |
+| Revisão Geral e Entrega Final | **Todos os integrantes** | — | — | — |
+
+---
+
+### Cronograma – Sprint 1 
+
+| Datas | Atividades Principais | Entregáveis |
+|--------|------------------------|--------------|
+| **(17/10 – 21/10)** | Reunião inicial, definição de escopo, levantamento de requisitos e pesquisa sobre YOUVISA. | Documento de escopo e contexto. |
+| **(22/10 – 26/10)** | Criação do diagrama de arquitetura e fluxos do chatbot. | Arquivo `.drawio` da arquitetura e fluxo do chatbot. |
+| **(27/10 – 31/10)** | Redação do README, descrição técnica e integração das seções. | Estrutura do README consolidada. |
+| **(01/10 – 04/11)** | Revisão final, ajustes visuais e envio ao GitHub privado. | Repositório finalizado e entregue. |
+
+---
+
+### Estratégia de Desenvolvimento
+
+Cada integrante é responsável por sua parte principal, mas todos participam das revisões e testes para garantir **coerência técnica, visual e textual**.  
+A comunicação entre os membros é feita por canais digitais e reuniões periódicas para acompanhamento das tarefas e controle de prazos.
+
+### Síntese
+
+O planejamento do nosso grupo reflete **colaboração, responsabilidade compartilhada e foco na qualidade técnica e documental**.  
+Essa organização garante que cada fase seja concluída com consistência, preparando terreno para o desenvolvimento prático na Sprint 2.
+
+---
+
+## 📂 Estrutura do Repositório
+
 ```
-assets               # Imagens.
-docs/                # Arquitetura, fluxos, segurança, timeline, pitch
-nlp/                 # Intents, entidades e exemplos
-data/schemas/        # JSON Schemas para registros e eventos
-infra/               # IaC esqueleto e decisões
-scripts/             # Utilitários (mock/seed)
+YOUVISA_Sprint1/
+│
+├─ README.md
+│
+├─ docs/
+│ ├─ arquitetura.drawio
+│ ├─ fluxo.drawio
+│ 
+└─ Assets/
+├─ arquitetura_youvisa.png
+├─ fluxo_chatbot_youvisa_.png
+└─ logo_fiap.png
+
 ```
