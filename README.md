@@ -288,7 +288,7 @@ O planejamento foi elaborado com base no modelo **RACI (Responsible, Accountable
 | **(17/10 – 21/10)** | Reunião inicial, definição de escopo, levantamento de requisitos e pesquisa sobre YOUVISA. | Documento de escopo e contexto. |
 | **(22/10 – 26/10)** | Criação do diagrama de arquitetura e fluxos do chatbot. | Arquivo `.drawio` da arquitetura e fluxo do chatbot. |
 | **(27/10 – 31/10)** | Redação do README, descrição técnica e integração das seções. | Estrutura do README consolidada. |
-| **(01/10 – 04/11)** | Revisão final, ajustes visuais e envio ao GitHub privado. | Repositório finalizado e entregue. |
+| **(01/11 – 04/11)** | Revisão final, ajustes visuais e envio ao GitHub privado. | Repositório finalizado e entregue. |
 
 ---
 
