@@ -6,7 +6,7 @@
 
 <br>
 
-# YOUVISA – Plataforma Inteligente de Atendimento Multicanal (Sprint 1)
+# YOUVISA – Plataforma Inteligente de Atendimento Multicanal (Sprint1)
 ## Beginner Coders
 ## 👨‍🎓 Integrantes:
 - <a href="https://www.linkedin.com/in/luana-porto-pereira-gomes/">Luana Porto Pereira Gomes</a>
@@ -23,9 +23,9 @@
 Este repositório contém a **proposta técnica inicial** da plataforma **YOUVISA** para um **atendimento cognitivo multicanal** (WhatsApp, Telegram, Web) com **NLP**, **RPA**, **visão computacional** para validação documental e **arquitetura cloud** escalável.  
 Esta entrega foca em **escopo, arquitetura, fluxos e governança**.
 
---
+---
 
-## 🎯 Alinhamento de Escopo e Problema
+## 🧩 Alinhamento de Escopo e Problema
 O desafio proposto pela **YOUVISA** nasce de uma necessidade real do mercado: a complexidade e o alto volume de processos relacionados à emissão de vistos e serviços consulares.  
 Hoje, boa parte dessas operações depende de atendimentos manuais, troca de e-mails, envio de documentos por diferentes canais e múltiplas etapas de verificação humana.  
 Esse modelo é lento, suscetível a erros e oferece uma experiência fragmentada tanto para o cliente quanto para as equipes internas.
@@ -45,7 +45,7 @@ Em resumo, o grupo se propõe a responder ao seguinte problema central:
 
 > **“Como criar uma plataforma inteligente de atendimento multicanal, capaz de automatizar a solicitação e verificação de vistos, garantindo segurança, empatia e continuidade da experiência do usuário?”**
 
---
+---
 
 ## 🎯 Objetivos da Sprint 1
 O principal objetivo é propor uma **solução inteligente de atendimento multicanal** para a YOUVISA, capaz de unir **inteligência artificial, automação de processos e visão computacional** em uma experiência integrada.  
