@@ -169,6 +169,10 @@ Esse atendente recebe o histórico completo da conversa, mantendo a **continuida
 ---
 
 ## 💬 Fluxos do Chatbot / NLP
+O fluxo contempla:
+<p align="center">
+<a href=""><img src="assets/Fluxo_Chatbot_Youvisa.png" alt="Fluxo" border="0" width=50% height=50%></a>
+</p>
 
 Os fluxos do chatbot representam o **núcleo de interação entre o usuário e a plataforma YOUVISA**.  
 Eles traduzem, de forma visual e funcional, **como o sistema entende, responde e age** diante de diferentes intenções do usuário.  
