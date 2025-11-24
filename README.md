@@ -208,12 +208,16 @@ A URL local será exibida automaticamente no terminal pelo Vite.
 ---
 
 ## 📄 Documentação da Sprint 2
-- Escopo do Fluxo Principal
-  docs/sprint2/escopo-fluxo-principal-youvisa-sprint2.md
-- Arquitetura do Pipeline (fluxograma)
-  docs/sprint2/arquitetura-pipeline-youvisa.(drawio|png)
-- Relatório Técnico (1–2 páginas)
-  docs/sprint2/relatorio-tecnico-sprint2.md
+
+- **Escopo do Fluxo Principal:**  
+  [`docs/sprint2/escopo-fluxo-principal-youvisa-sprint2.md`](docs/sprint2/escopo-fluxo-principal-youvisa-sprint2.md)
+
+- **Arquitetura do Pipeline (fluxograma):**  
+  [`docs/sprint2/arquitetura-pipeline-youvisa.png`](docs/sprint2/arquitetura-pipeline-youvisa.png)
+
+- **Relatório Técnico:**  
+  [`docs/sprint2/relatorio-tecnico-sprint2.md`](docs/sprint2/relatorio-tecnico-sprint2.md)
+
 
 
 
