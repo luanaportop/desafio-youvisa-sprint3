@@ -19,9 +19,6 @@
 - <a href="https://www.linkedin.com/in/leonardoorabona/">Leonardo Ruiz</a>
 ### Coordenador(a)
 - <a href="https://www.linkedin.com/in/profandregodoi/">André Godoi</a>
-## 📜 Introdução
-Este repositório contém a **proposta técnica inicial** da plataforma **YOUVISA** para um **atendimento cognitivo multicanal** (WhatsApp, Telegram, Web) com **NLP**, **RPA**, **visão computacional** para validação documental e **arquitetura cloud** escalável.  
-Esta entrega foca em **escopo, arquitetura, fluxos e governança**.
 
 ---
 
