@@ -311,17 +311,41 @@ Essa organização garante que cada fase seja concluída com consistência, prep
 ## 📂 Estrutura do Repositório
 
 ```
-YOUVISA_Sprint1/
-│
-├─ README.md
-│
-├─ docs/
-│ ├─ arquitetura.drawio
-│ ├─ fluxo.drawio
-│ 
-└─ Assets/
-├─ arquitetura_youvisa.png
-├─ fluxo_chatbot_youvisa_.png
-└─ logo_fiap.png
+YOUVISA-Sprint2/
+├── backend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── pipeline/
+│   │   ├── nlp/
+│   │   ├── vision/
+│   │   ├── email_service/
+│   │   ├── models/
+│   │   └── main.py
+│   ├── tests/
+│   └── requirements.txt
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Chatbot/
+│   │   │   ├── UploadArea/
+│   │   │   └── TaskPanel/
+│   │   ├── pages/
+│   │   └── services/
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.(js|ts)
+├── docs/
+│   ├── sprint2/
+│   │   ├── escopo-fluxo-principal-youvisa-sprint2.md
+│   │   ├── arquitetura-pipeline-youvisa.drawio
+│   │   ├── arquitetura-pipeline-youvisa.png
+│   │   └── relatorio-tecnico-sprint2.md
+│   └── sprint1/
+│       └── materiais-referencia.md
+├── assets/
+│   ├── prints/
+│   └── diagramas/
+├── .gitignore
+└── README.md
 
 ```
