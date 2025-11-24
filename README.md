@@ -6,7 +6,7 @@
 
 <br>
 
-# YOUVISA – Plataforma Inteligente de Atendimento Multicanal (Sprint1)
+# YOUVISA – Plataforma Inteligente de Atendimento Multicanal (Sprint2)
 ## Beginner Coders
 ## 👨‍🎓 Integrantes:
 - <a href="https://www.linkedin.com/in/luana-porto-pereira-gomes/">Luana Porto Pereira Gomes</a>
