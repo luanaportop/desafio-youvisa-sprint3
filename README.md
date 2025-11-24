@@ -191,6 +191,9 @@ pip install -r requirements.txt
 python src/main.py
 
 ```
+
+### COMO DEVE FICAR:
+```markdown
 ### 💻 Frontend
 
 ```bash
