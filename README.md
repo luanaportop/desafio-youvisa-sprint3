@@ -115,39 +115,46 @@ O fluxograma completo está disponível em:
 ## 📂 Estrutura das Pastas
 
 ```
-desafio-youvisa-sprint2/
-├── backend/
+DESAFIO-YOUVISA-SPRINT2/
+│── assets/
+│   ├── diagramas/
+│   ├── prints/
+│   └── logo-fiap.png
+│
+│── backend/
+│   ├── venv/
 │   ├── src/
 │   │   ├── api/
-│   │   ├── pipeline/
-│   │   ├── nlp/
-│   │   ├── vision/
+│   │   │   └── router.py
 │   │   ├── email_service/
+│   │   │   └── sender.py
 │   │   ├── models/
+│   │   │   ├── document.py
+│   │   │   └── models.py
+│   │   ├── nlp/
+│   │   │   └── classifier.py
+│   │   ├── pipeline/
+│   │   │   ├── pipeline.py
+│   │   │   ├── processor.py
+│   │   │   └── repository.py
+│   │   ├── vision/
+│   │   │   └── validator.py
+│   │   ├── uploads/
 │   │   └── main.py
-│   ├── tests/
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Chatbot/
-│   │   │   ├── UploadArea/
-│   │   │   └── TaskPanel/
-│   │   ├── pages/
-│   │   └── services/
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.(js|ts)
-├── docs/
+│   │
+│   ├── requirements.txt
+│   └── README.md
+│
+│── frontend/
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       └── services/
+│
+│── docs/
 │   ├── sprint2/
-│   │   ├── escopo-fluxo-principal-youvisa-sprint2.md
-│   │   ├── arquitetura-pipeline-youvisa.drawio
-│   │   ├── arquitetura-pipeline-youvisa.png
-│   │   └── relatorio-tecnico-sprint2.md   
-├── assets/
-│   ├── prints/
-│   └── diagramas/
-├── .gitignore
+│   └── escopo-fluxo-principal-youvisa-sprint2.md
+│
 └── README.md
 
 ```
@@ -161,38 +168,59 @@ desafio-youvisa-sprint2/
 
 ### Backend
 - Python
-- Flask ou FastAPI
+- FastAPI
 - OpenCV (visão computacional)
 - spaCy / NLTK ou NLP baseado em regras
 - smtplib para envio de e-mails
 
 ---
 
-## 🚀 Como Rodar o Projeto
+## 🚀 Como Executar o Backend (FastAPI)
+Pré-requisitos
+- Python 3.10+
+- FastAPI / Uvicorn (instalados automaticamente via requirements.txt)
 
-### 🔧 Backend
 
-```bash
+# 1- Ativar o ambiente virtual
+Abra o terminal na raiz do projeto:
 cd backend/
 
-# criar ambiente virtual
-python -m venv .venv
+Windows (PowerShell)
+.\venv\Scripts\activate
 
-# ativar ambiente virtual
-# Windows:
-.venv\Scripts\activate
-# Linux/Mac:
-source .venv/bin/activate
+Linux/macOS
+source venv/bin/activate
 
-# instalar dependências
+# 2- Instalar dependências (se necessário)
 pip install -r requirements.txt
 
-# rodar API
-python src/main.py
+# 3- Entrar na pasta src
+cd src
 
-```
+# 4- Rodar o servidor FastAPI
+uvicorn main:app --reload
 
-### 💻 Frontend
+# 5- Acessar a API
+🔹 Swagger UI (Interface de testes)
+
+http://127.0.0.1:8000/docs
+
+🔹 OpenAPI JSON
+
+http://127.0.0.1:8000/openapi.json
+
+
+## 🔌 Endpoints Disponíveis
+
+GET /health: Verifica se o servidor está ativo.
+
+POST /upload; Recebe documento e envia para o pipeline.
+
+GET /status: Retorna status global da solicitação + documentos enviados.
+
+---
+
+### 💻 Como Executar o Frontend
 
 ```bash
 cd frontend/
