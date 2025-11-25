@@ -2,17 +2,17 @@
 
 A arquitetura da Sprint 2 conecta todos os módulos da plataforma YOUVISA em um fluxo contínuo que simula o atendimento completo do usuário: chatbot → backend → automações → validações → atualização do processo → feedback ao usuário.
 
-Abaixo está a descrição oficial do pipeline para criação do fluxograma.
+Abaixo está a descrição do pipeline para criação do fluxograma.
 
 ---
 
 ## 1. Início do Fluxo – Chatbot / Frontend
 
 ### Responsabilidades:
-- Exibir o chat para interação com o usuário
-- Exibir instruções sobre os documentos
+- Exibir o chat e orientar o usuário.
+- Mostrar a lista de documentos necessários.
 - Receber arquivos via upload
-- Enviar arquivos e mensagens para o backend através de API REST
+- Enviar arquivos para o backend através de API REST
 - Atualizar a interface com status do processo
 
 ### Principais ações:
@@ -21,7 +21,6 @@ Abaixo está a descrição oficial do pipeline para criação do fluxograma.
 3. Usuário envia arquivos
 4. O frontend chama:
    - `POST /upload`
-   - `POST /message`
    - `GET /status`
 
 ---
@@ -32,14 +31,13 @@ Abaixo está a descrição oficial do pipeline para criação do fluxograma.
 - Receber requests do frontend
 - Organizar rotas e endpoints
 - Validar arquivos recebidos
-- Passar os arquivos para o pipeline interno
+- Passar os arquivos para o pipeline ide automação
 
 ### Endpoints principais:
-- `POST /upload` → Recebe documentos
-- `POST /message` → Recebe mensagens do usuário
+- `POST /upload` → Recebe documentos enviados
 - `GET /status` → Retorna estado atual do processo
 
-Quando um arquivo chega:
+Após receber o arquivo:
 
 **API → Pipeline de Automação**
 
@@ -73,7 +71,6 @@ Ao receber um arquivo da API, o pipeline cria um objeto interno como:
 
 ### Responsabilidades:
 - Identificar o tipo de documento enviado.
-- Interpretar mensagens do usuário no chatbot.
 - Auxiliar o pipeline a decidir quais validações aplicar.
 
 ### Exemplos de Regras de Classificação:
@@ -110,7 +107,7 @@ Classificação retorna um dos tipos:
 Se inválido:
 → pipeline marca tarefa como `pendente_correcao`  
 → Email Service é acionado  
-→ Frontend/Chatbot recebe o alerta
+→ Frontend exibe o alerta
 
 ---
 
@@ -126,15 +123,14 @@ Se inválido:
 **Mensagem:**  
 Seu documento *X* foi processado.  
 Status atual: *Y*.  
-Se necessário, enviaremos orientações adicionais.
 
-O Email Service é acionado diretamente pelo Pipeline após a validação de cada documento.
+Pipeline → Email Service → Usuário.
 
 ---
 
 ## 7. Status Service (Gerenciamento do Processo)
 
-O Status Service controla o avanço do processo de solicitação do visto.
+O Status Service gerencia o andamento do processo de solicitação do visto.
 
 ### Atualiza:
 - O status de cada documento individual.
@@ -149,9 +145,7 @@ O Status Service controla o avanço do processo de solicitação do visto.
 ### Disponibiliza:
 O frontend acessa essas informações via: GET/status
 
-O status atualizado é utilizado para renderizar:
-- Painel de documentos  
-- Mensagens automáticas no chatbot  
+O painel e o chatbot usam essas informações para atualizar a interface.
 
 ---
 
@@ -160,7 +154,7 @@ O status atualizado é utilizado para renderizar:
 Após processar documentos ou mensagens, o backend envia:
 
 - Tipo classificado do documento  
-- Status atual da tarefa  
+- Status da tarefa  
 - Lista completa de documentos enviados  
 - Status global da solicitação  
 - Mensagens automáticas geradas pelo pipeline/NLP  
@@ -179,13 +173,12 @@ Isto garante que o usuário acompanha **em tempo real** o andamento do seu proce
 O processo é concluído quando:
 
 - Todos os documentos obrigatórios foram **recebidos**, e  
-- Todos passaram pelas validações de forma **válida**.
+- Todos passaram nas validações.
 
 Quando isso ocorre:
 - O estado global muda para **CONCLUIDO**.
-- O chatbot envia mensagem final:
-  > “Todos os documentos foram validados. Seu processo YOUVISA foi concluído com sucesso.”
-
+- O chatbot exibe mensagem final:
+  > “Todos os documentos foram validados com sucesso.”
 - O painel exibe o status final.
 
 ---
@@ -193,20 +186,19 @@ Quando isso ocorre:
 ## 10. Mapa Visual para o Fluxograma (Draw.io)
 
 ### 🔹 Bloco 1 — Frontend (Chatbot + Painel)
-- Chatbot (mensagens + interação)
+- Chatbot 
 - Componente de Upload
 - Painel de Status
 
 **Saídas do Frontend → API**
+- GET /health
 - POST /upload
-- POST /message
 - GET /status
 
 ---
 
 ### 🔹 Bloco 2 — API Gateway (Backend)
 - Recebe uploads
-- Recebe mensagens
 - Retorna status
 - Encaminha documentos ao pipeline
 
@@ -215,10 +207,9 @@ Quando isso ocorre:
 ---
 
 ### 🔹 Bloco 3 — Pipeline de Automação
-- Criador de tarefas
-- Regras de roteamento
-- Orquestração do fluxo
-- Atualização de status
+- Cria tarefas
+- Orquestra validações
+- Atualiza status
 
 **Pipeline chama:**
 1. Classificação (NLP)
@@ -231,9 +222,7 @@ Quando isso ocorre:
 ### 🔹 Bloco 4 — Módulo de Classificação (NLP/IA)
 - Regras simples
 - Identificação do tipo de documento
-- Interpretação de intenções do usuário
-
-**Retorno → Pipeline**
+**Devolve tipo → Pipeline**
 
 ---
 
@@ -250,8 +239,6 @@ Quando isso ocorre:
 ### 🔹 Bloco 6 — Email Service
 - Confirma recebimento
 - Solicita correção se inválido
-
-**Notificação externa → Usuário**
 
 ---
 
@@ -274,12 +261,12 @@ Quando isso ocorre:
 
 ---
 
-## 11. Encerramento
+## 9. Encerramento
 
-Este documento descreve todos os módulos, responsabilidades, fluxos e interações necessárias para a Sprint 2 da YOUVISA.  
-O fluxograma representa visualmente o fluxo completo:
+Este documento descreve todos os módulos, responsabilidades, fluxos e interações necessárias para a Sprint 2.  
+O fluxograma pode ser resumido em:
 
-**Usuário → Chatbot → API → Pipeline → Validações → E-mail → Status → Usuário**
+**Usuário → Frontend → API → Pipeline → NPL/Visão → E-mail → Status → Frontend**
 
 ---
 
