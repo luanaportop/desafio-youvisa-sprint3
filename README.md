@@ -24,88 +24,114 @@
 
 ## 📘 Introdução
 
-Nesta Sprint 2, começamos a construir a versão funcional da plataforma YOUVISA. O foco agora é integrar chatbot, automação, visão computacional e um painel web para simular um atendimento real de solicitação de visto.
+Este repositório reúne o protótipo funcional desenvolvido para a Sprint 2 do Enterprise Challenge – YOUVISA, cuja proposta é criar um sistema de análise inicial de documentos para solicitação de visto de turismo.
 
-O sistema passa a receber documentos enviados pelo usuário, classificar cada arquivo, validar sua estrutura com OpenCV e criar tarefas automáticas dentro do pipeline. Além disso, usamos NLP para interpretar mensagens no chat e IA Generativa para gerar respostas mais claras e contextualizadas. A interface em React exibe o status do processo em tempo real, enquanto o backend em Python gerencia todo o fluxo.
+O projeto foi pensado como um MVP realista, simulando o comportamento de sistemas modernos que usam:
+- NLP (Processamento de Linguagem Natural)
+- IA Generativa (simulada de forma guiada)
+- Pipeline inteligente de decisão
+- RPA / Agente virtual
+- Validação automática de documentos
+- Chatbot orientado ao contexto do usuário
 
-Esta etapa consolida a arquitetura proposta na Sprint 1 e demonstra, na prática, como a YOUVISA pode automatizar etapas do atendimento consular usando tecnologias de IA e RPA.
+Mesmo sem utilizar modelos generativos reais (como GPT, Claude, Gemini ou LLaMA), implementamos fielmente os conceitos ensinados pela FIAP, como:
+- interpretação de intenção,
+- aprendizado em contexto,
+- raciocínio baseado no estado atual,
+- respostas dinâmicas,
+- pipeline de processamento,
+- simulação de agente de e-mail,
+- simulação de generative prompting.
 
 ---
+
+## 🎯 Objetivo do Projeto
+
+Criar um sistema funcional e demonstrável que permita:
+
+- o envio de documentos obrigatórios (passaporte, residência, financeiro e formulário);
+- validação automática do formato e classificação inteligente;
+- exibição do status do processo em tempo real;
+- simulação de envio de e-mail após uploads;
+- chatbot inteligente com comportamento semelhante a IA Generativa;
+- interface moderna, simples e orientada ao usuário;
+- fluxo de decisão inspirado em pipelines reais de IA e RPA.
 
 ## 📌 Escopo do Protótipo
 
-Fluxo principal simulado:
-
-1. Usuário inicia atendimento no chatbot pedindo **visto de turismo**;
-2. Chatbot explica os documentos necessários:
-   - Passaporte
-   - Comprovante de residência
-   - Comprovante financeiro
-   - Formulário de visto YOUVISA
-3. Usuário envia os documentos pela interface;
-4. Backend:
-   - Classifica o tipo de documento;
-   - Valida visualmente (OpenCV);
-   - Atualiza o status do documento e do processo;
-   - Cria/atualiza tarefas internas;
-   - Envia e-mails automáticos (confirmação ou correção);
-5. Painel em React exibe os arquivos recebidos e o status geral da solicitação.
+### Fluxo principal simulado:
+- Upload de arquivos JPEG/PNG, com bloqueio de PDF;
+- Classificação automática baseada em NLP simbólico;
+- Identificação dos documentos faltantes;
+- Tratamento automático de pendências (arquivo inválido ou errado);
+- Simulação de IA Generativa para respostas do chatbot YOUVISA;
+- Chatbot com raciocínio contextual, baseado no status do processo;
+- Pipeline inspirado em arquiteturas de agentes LLM;
+- Simulação de RPA para envio automático de e-mails;
+- UI refinada com comportamento dinâmico e respostas condicionadas.
 
 ---
 
-## 🎯 Objetivos
+## 🧩 Simulações Inteligentes (NLP, IA Generativa, RPA)
 
-Simular, de ponta a ponta, o fluxo de atendimento da YOUVISA para **solicitação de visto de turismo**, automatizando:
+### NLP (Processamento de Linguagem Natural)
+O projeto utiliza NLP simbólico, totalmente integrado ao backend e ao chatbot, para:
+- interpretar mensagens como:
+“qual documento falta?”,
+“posso enviar PDF?”,
+“status do processo?”,
+“enviei o documento”.
+- classificar documentos pelo nome do arquivo usando dicionário semântico.
 
-- Recebimento de documentos via chatbot / interface web;
-- Organização dos arquivos em classes (passaporte, comprovantes, formulário);
-- Criação de tarefas automáticas para cada documento;
-- Validação de documentos com visão computacional (OpenCV);
-- Geração de respostas inteligentes usando NLP e IA Generativa (simulada ou real);
-- Envio automático de e-mails de confirmação ou pedido de reenvio;
-- Visualização, em um painel React, dos documentos recebidos e status do processo.
+O classificador identifica automaticamente:
+- Passaporte
+- Comprovante de residência
+- Comprovante financeiro
+- Formulário YOUVISA
 
 ---
 
-## 🧩 Requisitos Técnicos
+### 🤖 IA Generativa (Simulada)
+Embora não utilize modelos de linguagem reais (como OpenAI ou Gemini), o chatbot YOUVISA implementa comportamento generativo simulado, baseado nos conceitos ensinados pela FIAP:
+- respostas adaptadas ao contexto do processo
+- raciocínio condicional baseado no status_global
+- mensagens personalizadas
+- explicações estruturadas
+- interação humanizada
+- respostas dinâmicas, não fixas
+Exemplo:
+Se faltar somente o comprovante financeiro, o chatbot responde especificamente sobre esse documento.
+Se tudo estiver correto, ele celebra com o usuário.
 
-A Sprint 2 exige a construção de um protótipo funcional que conecte chatbot, automação, IA e visão computacional. Os principais requisitos são:
+---
 
-- **Chatbot funcional** capaz de receber mensagens e permitir upload de documentos.
-- **Pipeline de automação em Python** para classificar arquivos, criar tarefas e gerenciar o fluxo.
-- **NLP** para identificar intenções e apoiar as respostas do atendimento.
-- **IA Generativa** para gerar mensagens personalizadas e contextualizadas.
-- **Validação visual com OpenCV**, verificando estrutura/formato básico dos documentos.
-- **Envio automático de e-mails** via SMTP, confirmando recebimento ou solicitando correções.
-- **Interface web em React + Vite**, exibindo o chatbot e o painel de status dos documentos.
-- **Fluxograma completo da arquitetura do pipeline**, documentado em `/docs/sprint2`.
+### 🟦 RPA (Automação Robótica de Processos – Simulada)
+Implementamos um agente automático que:
+- recebe o documento
+- valida formato
+- classifica
+- gera status
+- dispara um e-mail automático (simulado)
+Essa função imita o comportamento de um robô corporativo real, como os vistos em pipelines de RPA.
 
 ---
 
 ## 🏗 Arquitetura Geral da Solução
 
-A Sprint 2 conecta quatro grandes blocos:
-
-### **Frontend – React + Vite**
-- Interface do chatbot  
-- Upload de documentos  
-- Painel com status do processo  
-- Comunicação com o backend via API REST  
-
-### **Backend – Python**
-- Endpoints para upload, chat e status  
-- Pipeline de automação  
-- Validação visual com OpenCV  
-- NLP e IA Generativa (ou simulação estruturada)  
-- Envio de e-mails via SMTP  
-
-### **NLP / IA Generativa**
-- Detecta intenções do usuário  
-- Monta respostas contextualizadas  
-
-### **Visão Computacional (OpenCV)**
-- Validação básica do documento  
-- Verificação de estrutura, proporção e formato 
+Usuário
+   ↓
+Frontend (React + TS)
+   ↓ API calls
+Backend (FastAPI)
+   ↓
+Pipeline de Processamento:
+   • validação de imagem
+   • NLP simbólico
+   • classificação
+   • decisão do status
+   • simulação de e-mail
+   ↓
+Status atualizado em tempo real
 
 O fluxograma completo está disponível em:  
 `docs/sprint2/arquitetura-pipeline-youvisa.png`
@@ -139,21 +165,23 @@ DESAFIO-YOUVISA-SPRINT2/
 │   │   │   └── repository.py
 │   │   ├── vision/
 │   │   │   └── validator.py
-│   │   ├── uploads/
 │   │   └── main.py
-│   │
+│   │   ├── uploads/
 │   ├── requirements.txt
-│   └── README.md
-│
+│   
 │── frontend/
 │   └── src/
-│       ├── components/
-│       ├── pages/
-│       └── services/
-│
+│   │   ├── assets/
+│   |   ├── components/
+|   |   |   ├── chatbot.tsx
+│   │   │   ├── statuspanel.tsx
+│   │   │   └── uploadarea.tsx
+│   |   ├── services/
+│   |   |   └── api.ts
 │── docs/
 │   ├── sprint2/
-│   └── escopo-fluxo-principal-youvisa-sprint2.md
+|   |   ├── relatório-técnico
+│   |   └── escopo-fluxo-principal-youvisa-sprint2.md
 │
 └── README.md
 
