@@ -210,17 +210,17 @@ DESAFIO-YOUVISA-SPRINT2/
 ## 🚀 Como Executar o Projeto
 
 ### Backend
-cd backend/src
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+1. cd backend/src
+2. uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 Documentação da API:
 👉 http://localhost:8000/docs
 
 
 ### Frontend
-cd frontend
-npm install
-npm run dev
+1. cd frontend
+2. npm install
+3. npm run dev
 
 Acesse em:
 👉 http://localhost:5173/
