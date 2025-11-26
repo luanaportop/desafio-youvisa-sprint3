@@ -28,7 +28,7 @@ Este repositório reúne o protótipo funcional desenvolvido para a Sprint 2 do 
 
 O projeto foi pensado como um MVP realista, simulando o comportamento de sistemas modernos que usam:
 - NLP (Processamento de Linguagem Natural)
-- IA Generativa (simulada de forma guiada)
+- IA Generativa (simulada)
 - Pipeline inteligente de decisão
 - RPA / Agente virtual
 - Validação automática de documentos
@@ -110,9 +110,10 @@ Implementamos um agente automático que:
 - recebe o documento
 - valida formato
 - classifica
-- gera status
-- dispara um e-mail automático (simulado)
-Essa função imita o comportamento de um robô corporativo real, como os vistos em pipelines de RPA.
+- identifica erros
+- atualiza status
+- dispara um e-mail automático (simulado via console))
+Essa função imita o comportamento de um robô corporativo, como os vistos em pipelines de RPA.
 
 ---
 
@@ -120,21 +121,21 @@ Essa função imita o comportamento de um robô corporativo real, como os vistos
 
 Usuário
    ↓
-Frontend (React + TS)
-   ↓ API calls
-Backend (FastAPI)
+Frontend (React + TypeScript)
+   ↓ API REST
+Backend (FastAPI – Python)
    ↓
-Pipeline de Processamento:
-   • validação de imagem
+Pipeline Inteligente
+   • Validação de Imagem
    • NLP simbólico
-   • classificação
-   • decisão do status
-   • simulação de e-mail
+   • Classificação
+   • Decisão do status
+   • Simulação de e-mail (RPA)
    ↓
 Status atualizado em tempo real
 
-O fluxograma completo está disponível em:  
-`docs/sprint2/arquitetura-pipeline-youvisa.png`
+Fluxogramas e diagramas estão em:
+📁 docs/sprint2/arquitetura-pipeline-youvisa.png
 
 ---
 
@@ -189,80 +190,146 @@ DESAFIO-YOUVISA-SPRINT2/
 ---
 
 ## ⚙️ Tecnologias Utilizadas
-### Frontend
-- React
-- Vite
-- Axios / Fetch API
-
 ### Backend
 - Python
 - FastAPI
-- OpenCV (visão computacional)
-- spaCy / NLTK ou NLP baseado em regras
-- smtplib para envio de e-mails
+- Pydantic
+- Uvicorn
+- NLP simbólico
+- Pipeline customizado
+- Simulação de e-mail (agente RPA)
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- UI customizada e responsiva
 
 ---
 
-## 🚀 Como Executar o Backend (FastAPI)
-Pré-requisitos
-- Python 3.10+
-- FastAPI / Uvicorn (instalados automaticamente via requirements.txt)
+## 🚀 Como Executar o Projeto
+
+### Backend
+cd backend/src
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+Documentação da API:
+👉 http://localhost:8000/docs
 
 
-# 1- Ativar o ambiente virtual
-Abra o terminal na raiz do projeto:
-cd backend/
-
-Windows (PowerShell)
-.\venv\Scripts\activate
-
-Linux/macOS
-source venv/bin/activate
-
-# 2- Instalar dependências (se necessário)
-pip install -r requirements.txt
-
-# 3- Entrar na pasta src
-cd src
-
-# 4- Rodar o servidor FastAPI
-uvicorn main:app --reload
-
-# 5- Acessar a API
-🔹 Swagger UI (Interface de testes)
-
-http://127.0.0.1:8000/docs
-
-🔹 OpenAPI JSON
-
-http://127.0.0.1:8000/openapi.json
-
-
-## 🔌 Endpoints Disponíveis
-
-GET /health: Verifica se o servidor está ativo.
-
-POST /upload; Recebe documento e envia para o pipeline.
-
-GET /status: Retorna status global da solicitação + documentos enviados.
-
----
-
-### 💻 Como Executar o Frontend
-
-```bash
-cd frontend/
-
-# instalar dependências
+### Frontend
+cd frontend
 npm install
-
-# rodar o projeto em modo desenvolvimento
 npm run dev
 
-```
-A URL local será exibida automaticamente no terminal pelo Vite.
+Acesse em:
+👉 http://localhost:5173/
 
 ---
+
+### 📤 Regras de Envio de Documentos
+
+Formatos aceitos:
+- JPEG
+- PNG
+Formatos rejeitados:
+- PDF
+- Qualquer outro formato inválido
+Ao enviar algo inválido:
+- Documento vira pendente
+- Usuário recebe e-mail simulado
+- Chatbot explica o motivo da rejeição
+
+---
+
+### 🗂️ Classificação Automática de Documentos
+
+O backend interpreta o nome do arquivo:
+
+| Palavra no nome                  | Classificação |
+| -------------------------------- | ------------- |
+| "passaporte"                     | PASSAPORTE    |
+| "endereco", "residencia"         | RESIDÊNCIA    |
+| "financeiro", "extrato", "banco" | FINANCEIRO    |
+| "formulario"                     | FORMULÁRIO    |
+| Outra                            | DESCONHECIDO  |
+
+---
+
+🤖 Chatbot YOUVISA (NLP + IA Generativa Simulada)
+
+O chatbot consegue:
+- interpretar mensagens naturais
+- entender intenções
+- responder dinamicamente
+- analisar o status atual
+- guiar o usuário em cada etapa
+- explicar pendências
+- identificar documentos faltantes
+- recusar PDFs
+- simular comportamento generativo
+
+Exemplos de intenções entendidas:
+“qual documento falta?”
+“quais documentos preciso enviar?”
+“posso enviar pdf?”
+“enviei o documento”
+“status do processo?”
+
+---
+
+### 📧 Simulação de E-mail (Agente RPA)
+Sempre que um documento é enviado:
+1. O pipeline processa
+2. A validação ocorre
+3. O tipo é classificado
+4. O status é atualizado
+5. O sistema "envia" um e-mail (no console)
+
+Exemplos:
+✔ “Documento validado com sucesso”
+❌ “Arquivo inválido, envie JPEG/PNG”
+🟠 “Documento não corresponde ao tipo esperado”
+
+---
+
+🧪 ### Testes Realizados
+
+### Testes funcionais:
+- upload de JPEG
+- upload de PDF (erro simulado)
+- envio parcial de documentos
+- envio completo
+- fluxo com pendências
+- fluxo com documentos faltantes
+- chatbot interpretando variadas intenções
+
+### Testes de UX:
+- feedback visual
+- mensagens dinâmicas
+- rolagem automática no chat
+- exibição clara do status_global
+
+### 🎨 UI/UX - Design e Experiência
+
+Camada foi refinada com:
+- Layout minimalista
+- cores suaves
+- fonte de fácil leitura
+- chatbot elegante e responsivo
+- mensagens claras e amigaveis
+- foco no fluxo do usuário
+
+### 🏁 Conclusão
+
+Este protótipo demonstra, de forma clara e funcional, como um sistema real de análise documental pode operar combinando:
+- NLP simbólico
+- Simulação de IA Generativa
+- Simulação de RPA
+- Pipeline inteligente
+- Chatbot contextual
+- UX bem estruturada
+Nessa Sprint, cumprimos com os requisitos, entregando um produto coerente, funcional e alinhado às práticas ensinadas pela FIAP.
 
 ## 📄 Documentação da Sprint 2
 
