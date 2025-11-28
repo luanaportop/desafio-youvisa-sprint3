@@ -336,6 +336,20 @@ Camada foi refinada com:
 - mensagens claras e amigaveis
 - foco no fluxo do usuário
 
+## 📸 Evidências dos Testes (Prints)
+
+Todas as capturas de tela realizadas durante os testes funcionais, de UX e de comportamento do chatbot estão disponíveis na pasta:
+
+[📁 Pasta de Prints — Evidências de Testes](assets/prints)
+
+Essa pasta contém imagens que demonstram:
+- uploads bem-sucedidos
+- rejeições de PDF
+- comportamento do pipeline
+- mudanças do status_global
+- respostas do chatbot YOUVISA
+- interface após cada fluxo de envio
+
 ### 🏁 Conclusão
 
 Este protótipo demonstra, de forma clara e funcional, como um sistema real de análise documental pode operar combinando:
