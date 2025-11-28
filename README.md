@@ -134,8 +134,9 @@ Pipeline Inteligente
    ↓
 Status atualizado em tempo real
 
-Fluxogramas e diagramas estão em:
-📁 docs/sprint2/arquitetura-pipeline-youvisa.png
+<p align="center">
+  <img src="assets/diagrama/arquitetura-pipeline-youvisa-sprint2.drawio.png" width="85%">
+</p>
 
 ---
 
