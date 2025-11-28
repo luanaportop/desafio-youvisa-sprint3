@@ -135,7 +135,7 @@ Pipeline Inteligente
 Status atualizado em tempo real
 
 <p align="center">
-  <img src="assets/diagrama/arquitetura-pipeline-youvisa-sprint2.drawio.png" width="85%">
+  <img src="assets/diagramas/arquitetura-pipeline-youvisa-sprint2.drawio.png" width="85%">
 </p>
 
 ---
