@@ -350,6 +350,10 @@ Essa pasta contém imagens que demonstram:
 - respostas do chatbot YOUVISA
 - interface após cada fluxo de envio
 
+## 🎥 Vídeo de Demonstração
+
+[📺 Clique aqui para assistir no YouTube](https://youtu.be/BUg4E6uACPo)
+
 ### 🏁 Conclusão
 
 Este protótipo demonstra, de forma clara e funcional, como um sistema real de análise documental pode operar combinando:
@@ -373,6 +377,14 @@ Nessa Sprint, cumprimos com os requisitos, entregando um produto coerente, funci
   [`docs/sprint2/relatorio-tecnico-sprint2.pdf`](docs/sprint2/relatorio-tecnico-sprint2.pdf)
 
 
+## 🗃 Histórico de lançamentos
+
+* 0.1.0 - 28/11/2025
+    *
+
+## 📋 Licença
+
+<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/agodoi/template">MODELO GIT FIAP</a> por <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://fiap.com.br">Fiap</a> está licenciado sobre <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
 
 
 
