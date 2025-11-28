@@ -309,7 +309,7 @@ Exemplos:
 
 ---
 
-🧪 ### Testes Realizados
+## 🧪 Testes Realizados
 
 ### Testes funcionais:
 - upload de JPEG
@@ -353,7 +353,7 @@ Nessa Sprint, cumprimos com os requisitos, entregando um produto coerente, funci
   [`docs/sprint2/escopo-fluxo-principal-youvisa-sprint2.md`](docs/sprint2/escopo-fluxo-principal-youvisa-sprint2.md)
 
 - **Arquitetura do Pipeline (fluxograma):**  
-  [`docs/sprint2/arquitetura-pipeline-youvisa.png`](docs/sprint2/arquitetura-pipeline-youvisa.png)
+  [`docs/sprint2/arquitetura-pipeline-youvisa.md`](docs/sprint2/arquitetura-pipeline-youvisa.md)
 
 - **Relatório Técnico:**  
   [`docs/sprint2/relatorio-tecnico-sprint2.pdf`](docs/sprint2/relatorio-tecnico-sprint2.pdf)
