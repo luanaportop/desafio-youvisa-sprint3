@@ -119,20 +119,35 @@ Essa função imita o comportamento de um robô corporativo, como os vistos em p
 
 ## 🏗 Arquitetura Geral da Solução
 
-Usuário
-   ↓
-Frontend (React + TypeScript)
-   ↓ API REST
-Backend (FastAPI – Python)
-   ↓
-Pipeline Inteligente
-   • Validação de Imagem
-   • NLP simbólico
-   • Classificação
-   • Decisão do status
-   • Simulação de e-mail (RPA)
-   ↓
-Status atualizado em tempo real
+A arquitetura do YOUVISA oi construída para simular, de forma simples e funcional, o fluxo real de pré-análise de documentos para visto de turismo.
+O sistema integra frontend, backend, pipeline inteligente, NLP simbólico, chatbot contextual e simulação de automação (RPA) em um único fluxo contínuo.
+
+🔄 Visão Resumida do Fluxo
+
+1. Usuário → Frontend (React + TS)
+   - Realiza upload de documentos, acompanha status e interage com o chatbot.
+
+2. Frontend → API (FastAPI)
+   - Envia o arquivo para validação e recebe o status atualizado.
+
+3. Pipeline do Backend
+   - Valida o formato da imagem (JPEG/PNG)
+   - Classifica o documento por regras de NLP
+   - Atualiza o status global do processo
+   - Identifica documentos faltantes
+   - Simula envio automático de e-mail (RPA)
+
+4. Frontend Atualiza a Interface
+   Exibe:
+   - documentos enviados
+   - pendências
+   - status geral
+   - mensagens do chatbot baseadas no estado atual
+
+5. Chatbot YOUVISA
+   Interpreta mensagens do usuário, entende intenções e responde de forma contextual, simulando comportamento de IA generativa
+
+   Fluxograma da Arquitetura
 
 <p align="center">
   <img src="assets/diagramas/arquitetura-pipeline-youvisa-sprint2.drawio.png" width="85%">
@@ -341,7 +356,7 @@ Nessa Sprint, cumprimos com os requisitos, entregando um produto coerente, funci
   [`docs/sprint2/arquitetura-pipeline-youvisa.png`](docs/sprint2/arquitetura-pipeline-youvisa.png)
 
 - **Relatório Técnico:**  
-  [`docs/sprint2/relatorio-tecnico-sprint2.md`](docs/sprint2/relatorio-tecnico-sprint2.pdf)
+  [`docs/sprint2/relatorio-tecnico-sprint2.pdf`](docs/sprint2/relatorio-tecnico-sprint2.pdf)
 
 
 
