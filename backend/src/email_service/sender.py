@@ -12,14 +12,14 @@ def send_notification(document: Document) -> None:
         subject = "YOUVISA – Documento validado"
         body = (
             f"Seu documento '{document.filename}' foi validado com sucesso.\n"
-            f"Status: {document.status.value}"
+            f"Status: {document.status}"
         )
     else:
         subject = "YOUVISA – Documento precisa de correção"
         body = (
             f"Seu documento '{document.filename}' NÃO passou na validação.\n"
             f"Motivo: {document.validation_reason}\n"
-            f"Status: {document.status.value}"
+            f"Status: {document.status}"
         )
 
     print("\n========== EMAIL SIMULADO ==========")

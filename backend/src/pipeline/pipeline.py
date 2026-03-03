@@ -8,6 +8,9 @@ from models.document import Document, DocumentStatus, DocumentType
 from nlp.classifier import classify_document
 from vision.validator import validate_document
 from email_service.sender import send_notification
+from process.fsm import validar_transicao
+from events.status_event import StatusEvent
+from events.event_store import add_event
 
 
 class PipelineAutomacao:
@@ -29,6 +32,7 @@ class PipelineAutomacao:
         file: UploadFile,
         background_tasks: BackgroundTasks,
     ) -> Document:
+
         # 1) Lê conteúdo do arquivo
         content = await file.read()
 
@@ -41,14 +45,34 @@ class PipelineAutomacao:
         # 4) Valida imagem (visão computacional simulada)
         is_valid, reason = validate_document(content, doc_type)
 
-        # 5) Define status
-        status = (
+        # 5) Define status atual (inicial)
+        status_atual = DocumentStatus.AGUARDANDO_VALIDACAO
+
+        # 6) Define novo status baseado na validação
+        novo_status = (
             DocumentStatus.CONCLUIDO
             if is_valid
             else DocumentStatus.PENDENTE_CORRECAO
         )
 
-        # 6) Cria objeto Document
+        # 7) Valida transição usando FSM
+        if validar_transicao(status_atual.value, novo_status.value):
+            status = novo_status
+        else:
+            raise Exception(
+                f"Transição inválida: {status_atual} -> {novo_status}"
+            )
+        
+        event = StatusEvent(
+            document_id=doc_id,
+            status_anterior=status_atual.value,
+            status_novo=novo_status.value,
+            timestamp=datetime.utcnow()
+        )
+
+        add_event(event)
+
+        # 8) Cria objeto Document
         document = Document(
             id=doc_id,
             filename=file.filename,
@@ -58,10 +82,10 @@ class PipelineAutomacao:
             validation_reason=reason,
         )
 
-        # 7) Salva em memória
+        # 9) Salva em memória
         self._documents[doc_id] = document
 
-        # 8) Dispara "e-mail" em background (simulado)
+        # 10) Dispara "e-mail" em background (simulado)
         background_tasks.add_task(send_notification, document)
 
         return document
@@ -76,10 +100,13 @@ class PipelineAutomacao:
 
         if not docs:
             global_status = DocumentStatus.AGUARDANDO_VALIDACAO
+
         elif any(d.status == DocumentStatus.PENDENTE_CORRECAO for d in docs):
             global_status = DocumentStatus.PENDENTE_CORRECAO
+
         elif all(d.status == DocumentStatus.CONCLUIDO for d in docs):
             global_status = DocumentStatus.CONCLUIDO
+
         else:
             global_status = DocumentStatus.EM_ANALISE
 
@@ -87,4 +114,3 @@ class PipelineAutomacao:
             "global_status": global_status,
             "documents": docs,
         }
-

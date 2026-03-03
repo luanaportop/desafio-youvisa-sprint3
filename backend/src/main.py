@@ -1,18 +1,29 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Optional
 import uuid
 import os
 import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime
 
+from events.event_bus import publish, subscribe
+from notifications.status_notification import handle_status_change
+
+from database.init_db import init_db
+from database.db import get_connection
+
+
 app = FastAPI(
-    title="YOUVISA Sprint 2 - Backend",
+    title="YOUVISA Sprint 3 - Backend",
     version="1.0.0",
-    description="API básica para receber arquivos e expor status do processo."
+    description="API para upload de documentos e acompanhamento do processo de visto."
 )
+
+# inicializa banco
+init_db()
+
 
 # --------------------- CORS ---------------------
 
@@ -23,6 +34,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # --------------------- MODELOS ---------------------
 
@@ -35,30 +47,22 @@ class DocumentStatus(str):
 class Document(BaseModel):
     id: str
     filename: str
-    type: str              # tipo lógico (passaporte, comprovante_residencia, etc.)
+    type: str
     status: str
     created_at: str
     validation_reason: Optional[str] = None
 
 
-# Lista de documentos simulada (memória)
-documents_db: List[Document] = []
-
-
-# --------------------- FUNÇÃO HÍBRIDA DE E-MAIL ---------------------
+# --------------------- EMAIL ---------------------
 
 def send_email(to_email: str, subject: str, message: str):
-    """
-    Envia e-mail real SE variáveis de ambiente SMTP estiverem configuradas.
-    Senão, simula o envio imprimindo no terminal.
-    """
 
     smtp_server = os.getenv("SMTP_SERVER")
     smtp_port = os.getenv("SMTP_PORT")
     smtp_user = os.getenv("SMTP_USER")
     smtp_pass = os.getenv("SMTP_PASSWORD")
 
-    # Caso NÃO esteja configurado → SIMULAÇÃO
+    # Simulação caso não exista SMTP
     if not smtp_server or not smtp_user or not smtp_pass:
         print("\n--- SIMULAÇÃO DE ENVIO DE E-MAIL ---")
         print(f"Para: {to_email}")
@@ -66,9 +70,8 @@ def send_email(to_email: str, subject: str, message: str):
         print("Mensagem:")
         print(message)
         print("-------------------------------------\n")
-        return {"simulated": True}
+        return
 
-    # Envio real
     try:
         msg = MIMEText(message)
         msg["Subject"] = subject
@@ -79,110 +82,140 @@ def send_email(to_email: str, subject: str, message: str):
             server.login(smtp_user, smtp_pass)
             server.send_message(msg)
 
-        print("E-mail REAL enviado com sucesso!")
-        return {"sent": True}
-
     except Exception as e:
-        print(f"Erro ao enviar e-mail real: {e}")
-        return {"error": str(e)}
+        print(f"Erro ao enviar e-mail: {e}")
 
 
-# --------------------- DETECÇÃO DE TIPO DE DOCUMENTO ---------------------
+# --------------------- DETECÇÃO DE DOCUMENTO ---------------------
 
 def detectar_tipo_documento(filename: str) -> str:
-    """
-    Decide o tipo lógico do documento com base no nome do arquivo.
-    Aceita variações como 'endereco' ou 'residencia' para comprovante de residência.
-    """
+
     name = filename.lower()
 
     # Passaporte
-    if "passaport" in name:  # cobre 'passaporte', 'passport', etc.
+    if "passaporte" in name or "passport" in name:
         return "passaporte"
 
-    # Comprovante de residência (endereço)
-    if "comprovante" in name and (
-        "residencia" in name
-        or "residência" in name
-        or "endereco" in name
-        or "endereço" in name
-    ):
+    # Comprovante de residência
+    if "residencia" in name or "residência" in name or "endereco" in name or "endereço" in name:
         return "comprovante_residencia"
 
     # Comprovante financeiro
-    if "financeir" in name or "renda" in name or "banc" in name:
+    if "financeiro" in name or "renda" in name or "banc" in name:
         return "comprovante_financeiro"
 
     # Formulário
-    if "formulario" in name or "formulário" in name:
+    if "formulario" in name:
         return "formulario"
 
-    # Caso não bata com nada conhecido
     return "desconhecido"
 
 
-# --------------------- HEALTH CHECK ---------------------
+# --------------------- ROOT ---------------------
+
+@app.get("/")
+def root():
+    return {"message": "YOUVISA API running"}
+
+
+# --------------------- HEALTH ---------------------
 
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
 
 
-# --------------------- UPLOAD DE DOCUMENTO ---------------------
+# --------------------- UPLOAD ---------------------
 
 @app.post("/upload")
 async def upload_document(file: UploadFile = File(...)):
+
     file_extension = file.filename.split(".")[-1].lower()
+
     is_image = file_extension in ["jpg", "jpeg", "png"]
     is_pdf = file_extension == "pdf"
 
-    doc_id = str(uuid.uuid4())
-
-    # tipo lógico do documento (passaporte, comprovante_residencia, etc.)
     doc_type = detectar_tipo_documento(file.filename)
 
-    # ----------------- Lógica de validação simulada -----------------
+    # BLOQUEIA nome inválido
+    if doc_type == "desconhecido":
+        raise HTTPException(
+            status_code=400,
+            detail="Tipo de documento não reconhecido. Use nomes como passaporte, comprovante_residencia, comprovante_financeiro ou formulario."
+        )
 
+    doc_id = str(uuid.uuid4())
+
+    # validação simulada
     if is_image:
         status = DocumentStatus.CONCLUIDO
-        reason = "Documento válido (validação básica simulada)."
-
-        send_email(
-            to_email="usuario@exemplo.com",
-            subject="Documento recebido com sucesso",
-            message=f"Seu documento '{file.filename}' foi validado com sucesso."
-        )
+        reason = "Documento válido (validação simulada)."
 
     elif is_pdf:
         status = DocumentStatus.PENDENTE
-        reason = "Arquivo não é uma imagem válida."
-
-        send_email(
-            to_email="usuario@exemplo.com",
-            subject="Documento inválido — ação necessária",
-            message=f"O documento '{file.filename}' não passou na validação. Favor reenviar em JPEG ou PNG."
-        )
+        reason = "Arquivo não é imagem válida."
 
     else:
         status = DocumentStatus.PENDENTE
         reason = "Formato de arquivo não suportado."
-
-        send_email(
-            to_email="usuario@exemplo.com",
-            subject="Documento inválido — ação necessária",
-            message=f"O arquivo '{file.filename}' possui formato não suportado. Envie em JPEG ou PNG."
-        )
 
     document = Document(
         id=doc_id,
         filename=file.filename,
         type=doc_type,
         status=status,
-        created_at=datetime.utcnow().isoformat() + "Z",  # Simulação de timestamp
+        created_at=datetime.utcnow().isoformat(),
         validation_reason=reason
     )
 
-    documents_db.append(document)
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO documents (id, filename, type, status, created_at, validation_reason)
+    VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+        document.id,
+        document.filename,
+        document.type,
+        document.status,
+        document.created_at,
+        document.validation_reason
+    ))
+
+    cursor.execute("""
+    INSERT INTO status_events (document_id, status_anterior, status_novo, timestamp)
+    VALUES (?, ?, ?, ?)
+    """, (
+        document.id,
+        "AGUARDANDO_VALIDACAO",
+        document.status,
+        datetime.utcnow().isoformat()
+    ))
+
+    conn.commit()
+    conn.close()
+
+    # dispara evento
+    publish("STATUS_CHANGED", document)
+
+    # envia email
+    if status == DocumentStatus.CONCLUIDO:
+
+        send_email(
+            "luana.porto.pereira@gmail.com",
+            "Documento validado",
+            f"Seu documento {file.filename} foi validado."
+        )
+
+    else:
+
+        send_email(
+            "luana.porto.pereira@gmail.com",
+            "Documento inválido",
+            f"O documento {file.filename} precisa ser reenviado."
+        )
+
     return document
 
 
@@ -190,55 +223,58 @@ async def upload_document(file: UploadFile = File(...)):
 
 @app.get("/status")
 def get_status():
-    """
-    Retorna:
-      - status_global
-      - lista de documentos
-      - tipos_faltando: quais tipos obrigatórios ainda não foram enviados com sucesso
 
-    Regras:
-      - Se tiver qualquer documento PENDENTE_CORRECAO -> status_global = PENDENTE_CORRECAO
-      - Senão, se faltam tipos obrigatórios          -> status_global = AGUARDANDO_VALIDACAO
-      - Senão (tudo enviado e válido)                -> status_global = CONCLUIDO
-    """
+    conn = get_connection()
+    cursor = conn.cursor()
 
-    # Tipos obrigatórios para o fluxo de visto de turismo
+    cursor.execute("SELECT * FROM documents")
+    rows = cursor.fetchall()
+
+    documents = [dict(row) for row in rows]
+
+    conn.close()
+
     tipos_obrigatorios = [
         "passaporte",
         "comprovante_residencia",
         "comprovante_financeiro",
-        "formulario",
+        "formulario"
     ]
 
-    # Considera como "enviado" apenas documentos CONCLUIDOS
     tipos_enviados = {
-        doc.type
-        for doc in documents_db
-        if doc.status == DocumentStatus.CONCLUIDO
+        doc["type"]
+        for doc in documents
+        if doc["status"] == DocumentStatus.CONCLUIDO
     }
 
-    tipos_faltando = [t for t in tipos_obrigatorios if t not in tipos_enviados]
+    tipos_faltando = [
+        t for t in tipos_obrigatorios if t not in tipos_enviados
+    ]
 
-    # --- Cálculo do status_global ---
+    if not documents:
 
-    if not documents_db:
-        # nada enviado ainda
         global_status = DocumentStatus.AGUARDANDO
+
     else:
-        # Se existe qualquer documento pendente de correção
-        if any(doc.status == DocumentStatus.PENDENTE for doc in documents_db):
+
+        if any(doc["status"] == DocumentStatus.PENDENTE for doc in documents):
+
             global_status = DocumentStatus.PENDENTE
+
         else:
-            # Se ainda faltam tipos obrigatórios -> aguardando
+
             if tipos_faltando:
                 global_status = DocumentStatus.AGUARDANDO
             else:
-                # Todos os obrigatórios foram enviados e estão concluídos
                 global_status = DocumentStatus.CONCLUIDO
 
     return {
         "status_global": global_status,
         "tipos_faltando": tipos_faltando,
-        "documentos": documents_db,
+        "documentos": documents
     }
 
+
+# --------------------- EVENT SUBSCRIBE ---------------------
+
+subscribe("STATUS_CHANGED", handle_status_change)

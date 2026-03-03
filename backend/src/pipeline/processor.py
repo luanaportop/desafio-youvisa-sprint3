@@ -1,5 +1,4 @@
 from fastapi import UploadFile, BackgroundTasks
-
 from .pipeline import PipelineAutomacao
 
 

@@ -48,6 +48,11 @@ const UploadArea: React.FC<UploadAreaProps> = ({ onUploaded, onMessage }) => {
       setFile(null);
     } catch (err: any) {
       onMessage(`Erro ao enviar: ${err.message ?? err}`);
+      if (err.response?.data?.detail) {
+        onMessage(err.response.data.detail)
+      } else {
+        onMessage("Erro ao enviar documento.")
+      }
     } finally {
       setLoading(false);
     }
