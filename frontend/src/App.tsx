@@ -3,6 +3,7 @@
 // Aqui só organizamos layout, estilo e integração entre os componentes.
 
 import React, { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 import UploadArea from "./components/UploadArea";
 import StatusPanel from "./components/StatusPanel";
@@ -85,6 +86,8 @@ const App: React.FC = () => {
           zIndex: 10,
         }}
       />
+
+      <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
 
       <div style={{ maxWidth: 920, margin: "0 auto" }}>
         {/* Cabeçalho da aplicação */}

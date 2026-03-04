@@ -2,7 +2,10 @@
 // Responsável apenas pela interface e fluxo de upload de arquivos.
 
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { uploadDocument } from "../services/api";
+
+const MIN_FILE_SIZE_BYTES = 10 * 1024;
 
 interface UploadAreaProps {
   onUploaded: () => void;       // Chamado após upload bem-sucedido para atualizar o status global
@@ -30,6 +33,13 @@ const UploadArea: React.FC<UploadAreaProps> = ({ onUploaded, onMessage }) => {
   const handleUpload = async () => {
     if (!file) {
       onMessage("Selecione um arquivo antes de enviar.");
+      return;
+    }
+
+    if (file.size < MIN_FILE_SIZE_BYTES) {
+      toast.error(
+        `Arquivo muito pequeno (${(file.size / 1024).toFixed(1)} KB). Mínimo: ${MIN_FILE_SIZE_BYTES / 1024} KB.`
+      );
       return;
     }
 
