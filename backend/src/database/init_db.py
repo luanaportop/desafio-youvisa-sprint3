@@ -12,9 +12,16 @@ def init_db():
         type TEXT,
         status TEXT,
         created_at TEXT,
-        validation_reason TEXT
+        validation_reason TEXT,
+        file_path TEXT
     )
     """)
+
+    # Migração: adiciona file_path se a tabela já existia sem a coluna
+    try:
+        cursor.execute("ALTER TABLE documents ADD COLUMN file_path TEXT")
+    except Exception:
+        pass
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS status_events (

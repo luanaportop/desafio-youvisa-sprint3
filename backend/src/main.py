@@ -5,6 +5,10 @@ from typing import Optional
 import uuid
 import os
 import smtplib
+from dotenv import load_dotenv
+
+# Carrega variáveis de .env (pasta backend ou backend/src)
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 from email.mime.text import MIMEText
 from datetime import datetime
 
@@ -13,6 +17,7 @@ from notifications.status_notification import handle_status_change
 
 from database.init_db import init_db
 from database.db import get_connection
+from document_validation import validate_image
 
 
 app = FastAPI(
@@ -23,6 +28,16 @@ app = FastAPI(
 
 # inicializa banco
 init_db()
+
+# Diretório onde os arquivos enviados são salvos (relativo ao diretório deste arquivo)
+UPLOADS_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+
+
+def ensure_uploads_dir():
+    os.makedirs(UPLOADS_DIR, exist_ok=True)
+
+
+ensure_uploads_dir()
 
 
 # --------------------- CORS ---------------------
@@ -146,15 +161,22 @@ async def upload_document(file: UploadFile = File(...)):
 
     doc_id = str(uuid.uuid4())
 
-    # validação simulada
-    if is_image:
-        status = DocumentStatus.CONCLUIDO
-        reason = "Documento válido (validação simulada)."
+    # Salva o arquivo em disco primeiro (para validação visual em imagens)
+    ensure_uploads_dir()
+    safe_ext = file_extension if file_extension in ["jpg", "jpeg", "png", "pdf"] else "bin"
+    saved_filename = f"{doc_id}.{safe_ext}"
+    file_path = os.path.join(UPLOADS_DIR, saved_filename)
+    content = await file.read()
+    with open(file_path, "wb") as f:
+        f.write(content)
 
+    # Validação: imagem → validação visual com OpenCV; PDF/outros → pendente
+    if is_image:
+        valid, reason = validate_image(file_path)
+        status = DocumentStatus.CONCLUIDO if valid else DocumentStatus.PENDENTE
     elif is_pdf:
         status = DocumentStatus.PENDENTE
         reason = "Arquivo não é imagem válida."
-
     else:
         status = DocumentStatus.PENDENTE
         reason = "Formato de arquivo não suportado."
@@ -172,15 +194,16 @@ async def upload_document(file: UploadFile = File(...)):
     cursor = conn.cursor()
 
     cursor.execute("""
-    INSERT INTO documents (id, filename, type, status, created_at, validation_reason)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO documents (id, filename, type, status, created_at, validation_reason, file_path)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
     """, (
         document.id,
         document.filename,
         document.type,
         document.status,
         document.created_at,
-        document.validation_reason
+        document.validation_reason,
+        file_path,
     ))
 
     cursor.execute("""
@@ -199,21 +222,26 @@ async def upload_document(file: UploadFile = File(...)):
     # dispara evento
     publish("STATUS_CHANGED", document)
 
-    # envia email
+    # envia e-mail avisando recebimento e status
+    destinatario = os.getenv("NOTIFICATION_EMAIL", "paulobqs@gmail.com")
     if status == DocumentStatus.CONCLUIDO:
-
         send_email(
-            "luana.porto.pereira@gmail.com",
-            "Documento validado",
-            f"Seu documento {file.filename} foi validado."
+            destinatario,
+            "YOUVISA – Documento recebido e validado",
+            f"Seu documento foi recebido e salvo com sucesso.\n\n"
+            f"Arquivo: {file.filename}\n"
+            f"Status: validado.\n"
+            f"O arquivo foi armazenado no sistema."
         )
-
     else:
-
         send_email(
-            "luana.porto.pereira@gmail.com",
-            "Documento inválido",
-            f"O documento {file.filename} precisa ser reenviado."
+            destinatario,
+            "YOUVISA – Documento recebido (pendente de correção)",
+            f"Recebemos e salvamos seu documento.\n\n"
+            f"Arquivo: {file.filename}\n"
+            f"Status: pendente de correção.\n"
+            f"Motivo: {reason}\n\n"
+            f"Por favor, reenvie o documento conforme as orientações."
         )
 
     return document
@@ -227,10 +255,11 @@ def get_status():
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM documents")
+    cursor.execute("SELECT * FROM documents ORDER BY created_at DESC")
     rows = cursor.fetchall()
 
-    documents = [dict(row) for row in rows]
+    # Converte sqlite3.Row em dict (compatível com Python < 3.12)
+    documents = [dict(zip(row.keys(), row)) for row in rows]
 
     conn.close()
 

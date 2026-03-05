@@ -49,7 +49,9 @@ const UploadArea: React.FC<UploadAreaProps> = ({ onUploaded, onMessage }) => {
       const result = await uploadDocument(file);
 
       // Mostra o status retornado pelo backend
-      onMessage(`Documento enviado. Status = ${result.status}`);
+      onMessage(`Documento enviado e salvo. Status = ${result.status}. Você receberá um e-mail de confirmação.`);
+
+      toast.success("Documento salvo! Verifique seu e-mail para a confirmação.");
 
       // Atualiza o painel de status global
       onUploaded();
