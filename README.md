@@ -209,6 +209,7 @@ graph TD
     subgraph Saida [Comunicacao]
         E --> I[Servico SMTP: Notificacoes]
     end
+```
 
 ## 🧩 Descrição das Camadas
 
