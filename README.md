@@ -243,8 +243,7 @@ Camada responsável pelo registro das interações da IA, garantindo:
 
 # 📂 Estrutura de pastas
 
-```mermaid
-
+```
 DESAFIO-YOUVISA-SPRINT3/
 
 assets/
