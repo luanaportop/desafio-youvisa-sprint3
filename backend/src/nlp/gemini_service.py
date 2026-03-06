@@ -1,11 +1,10 @@
-fimport os
+import os
 from google import genai
-from dotenv import load_dotenv # 1. Importar a biblioteca
-from .ai_governance import log_ai_interaction
+from dotenv import load_dotenv
 
-load_dotenv() 
+load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
 
 
 # SYSTEM_PROMPT com Regras de Governança
