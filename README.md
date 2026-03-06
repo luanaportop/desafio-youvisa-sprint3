@@ -84,8 +84,9 @@ Esse registro permite:
 
 Essa prática segue princípios de **AI Governance utilizados em sistemas corporativos**.
 
+---
 
-## 🔐 LGPD e Proteção de Dados
+# 🔐 LGPD e Proteção de Dados
 
 O sistema foi projetado considerando princípios da **Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018)**.
 
