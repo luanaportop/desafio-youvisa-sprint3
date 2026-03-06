@@ -344,10 +344,18 @@ Após definir a variável, reinicie o terminal.
 ---
 
 ## Backend
-1. Acesse a pasta do backend: cd backend/src
-2. Instale as dependências do projeto: pip install fastapi uvicorn google-genai python-multipart
-3. Execute o servidor: uvicorn main:app --reload --host 0.0.0.0 --port 8000
-
+1. Acesse a pasta do backend:
+```bash
+  cd backend/src
+```
+2. Instale as dependências do projeto:
+```bash
+   pip install fastapi uvicorn google-genai python-multipart
+````
+3. Execute o servidor:
+```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
 Documentação da API:
 👉 http://localhost:8000/docs
 
