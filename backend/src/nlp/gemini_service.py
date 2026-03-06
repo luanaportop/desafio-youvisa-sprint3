@@ -1,4 +1,6 @@
 from google import genai
+from .ai_governance import log_ai_interaction
+
 
 client = genai.Client()
 
@@ -33,6 +35,7 @@ def gerar_resposta(pergunta: str, contexto: str) -> str:
             contents=prompt
         )
 
+<<<<<<< HEAD
         return response.text
 
     # --- TRATAMENTO DE ERRO (Fallback) ---
@@ -44,3 +47,9 @@ def gerar_resposta(pergunta: str, contexto: str) -> str:
             f"Mas consultando o sistema, vi que seu processo está com o status: **{status_atual}**. "
             f"Por favor, tente perguntar novamente em alguns instantes."
         )
+=======
+    ai_response = response.text
+    log_ai_interaction(pergunta, ai_response)
+
+    return ai_response
+>>>>>>> d18fc34 (Sprint 3: adicionado diagrama de estados YOUVISA)

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.6.1">
+  <diagram name="Página-1" id="nfRko0bycxU8xyqxWpCa">
+    <mxGraphModel dx="1349" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="fg2M37kyVG6_FRI67IS--7" edge="1" parent="1" source="fg2M37kyVG6_FRI67IS--1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="409" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#36393d;" value="&lt;b&gt;&lt;font face=&quot;Tahoma&quot;&gt;PROCESSO&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font face=&quot;Tahoma&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;font face=&quot;Tahoma&quot;&gt;INICIADO&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="349" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontStyle=1;fontFamily=Tahoma;fillColor=#cce5ff;strokeColor=#36393d;" value="PROCESSO&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;FINALIZADO&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="349" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--11" edge="1" parent="1" source="fg2M37kyVG6_FRI67IS--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="409" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontStyle=1;fontFamily=Tahoma;fillColor=light-dark(#FFFFFF,#6E93B8);" value="EM ANÁLISE" vertex="1">
+          <mxGeometry height="60" width="120" x="349" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Tahoma;fontStyle=1;fillColor=light-dark(#FFFFFF,#6E93B8);" value="PENDENTE DE&lt;div&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;CORREÇÃO&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="349" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--16" edge="1" parent="1" source="fg2M37kyVG6_FRI67IS--5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="409" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--21" edge="1" parent="1" source="fg2M37kyVG6_FRI67IS--5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="fg2M37kyVG6_FRI67IS--3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="309" y="360" />
+              <mxPoint x="309" y="630" />
+            </Array>
+            <mxPoint x="299" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Tahoma;fontStyle=1;fillColor=light-dark(#FFFFFF,#6E93B8);strokeColor=#36393d;" value="EM VALIDAÇÃO" vertex="1">
+          <mxGeometry height="60" width="120" x="349" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--8" edge="1" parent="1" source="fg2M37kyVG6_FRI67IS--6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="409" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--13" connectable="0" parent="fg2M37kyVG6_FRI67IS--8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Tahoma;fontSize=13;" value="&lt;font&gt;documentos enviados&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="1" y="1" as="geometry">
+            <mxPoint x="70" y="-30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontStyle=1;fontFamily=Tahoma;fillColor=light-dark(#FFFFFF,#6E93B8);" value="AGUARDANDO&lt;div&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;DOCUMENTOS&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="349" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--17" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Tahoma;fontSize=13;" value="&lt;font&gt;documentos corrigidos&lt;/font&gt;" vertex="1">
+          <mxGeometry x="540" y="490" as="geometry">
+            <mxPoint x="4" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--18" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="fg2M37kyVG6_FRI67IS--5" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="490" />
+              <mxPoint x="650" y="360" />
+            </Array>
+            <mxPoint x="620" y="490" as="sourcePoint" />
+            <mxPoint x="589" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--23" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Tahoma;fontSize=13;rotation=90;" value="&lt;font&gt;documentos válidos&lt;/font&gt;" vertex="1">
+          <mxGeometry x="250" y="680" as="geometry">
+            <mxPoint x="-177" y="-47" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fg2M37kyVG6_FRI67IS--24" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Tahoma;fontSize=13;" value="&lt;font&gt;erro na validação&lt;/font&gt;" vertex="1">
+          <mxGeometry x="460" y="420" as="geometry">
+            <mxPoint x="4" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
