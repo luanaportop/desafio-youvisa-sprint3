@@ -154,34 +154,31 @@ A plataforma **YOUVISA** foi projetada utilizando uma arquitetura em camadas, se
 
 Esse modelo facilita a manutenção do sistema, permite escalabilidade e melhora a organização do fluxo de processamento.
 
-## 🔷 Diagrama de Arquitetura do Sistema
+### 🔷 Diagrama de Arquitetura do Sistema
 
 ```mermaid
 flowchart TD
 
-A[Usuário] --> B[Frontend<br>React + TypeScript]
+A[Usuario] --> B[Frontend React + TypeScript]
 
-B --> C[API Backend<br>FastAPI]
+B --> C[API Backend FastAPI]
 
-C --> D[Servidor ASGI<br>Uvicorn]
+C --> D[Servidor Uvicorn]
 
-D --> E[Pipeline de Validação de Documentos]
+D --> E[Pipeline de Validacao de Documentos]
 
-E --> F[Classificação de Documentos<br>NLP]
+E --> F[Classificacao de Documentos NLP]
 
-F --> G[IA Generativa<br>Google Gemini]
+F --> G[IA Generativa Gemini]
 
-G --> H[Governança de IA<br>Registro de Interações]
+G --> H[Governanca de IA e Registro de Interacoes]
 
-E --> I[Envio de E-mail de Confirmação<br>SMTP]
+E --> I[Envio de Email de Confirmacao SMTP]
 
 C --> J[Gerenciamento de Status do Processo]
 
 J --> B
-
-´´´
-
-
+```
 
 ## Descrição das Camadas
 
