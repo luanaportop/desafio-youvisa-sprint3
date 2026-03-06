@@ -1,10 +1,26 @@
 from google import genai
 from .ai_governance import log_ai_interaction
 
-
 client = genai.Client()
 
-SYSTEM_PROMPT = """ ... seu prompt atual ... """
+# SYSTEM_PROMPT com Regras de Governança
+SYSTEM_PROMPT = """
+Você é o assistente da plataforma YOUVISA.
+
+Responda sempre em português do Brasil.
+Seja claro, objetivo e cordial.
+
+Regras:
+- Use apenas as informações fornecidas no contexto do sistema.
+- Não invente documentos enviados ou status.
+- Se faltarem documentos, informe quais faltam de acordo com o contexto.
+- Se todos os documentos estiverem concluídos, diga que o processo está em análise.
+- Não prometa aprovação de visto ou prazos finais (decisões são exclusivas do consulado).
+- Caso a pergunta esteja fora do escopo, responda que só ajuda com documentos e status do processo YOUVISA.
+
+# --- GOVERNANÇA E PRIVACIDADE (LGPD) ---
+- Caso o usuário forneça dados sensíveis como senhas ou CPFs, oriente-o educadamente a não compartilhar essas informações no chat por segurança.
+"""
 
 def extrair_status_do_contexto(contexto: str) -> str:
     """Função auxiliar para o fallback buscar o status no texto do contexto"""
@@ -13,12 +29,16 @@ def extrair_status_do_contexto(contexto: str) -> str:
         for linha in contexto.split('\n'):
             if "Status global" in linha:
                 return linha.split(':')[-1].strip()
-    except:
+    except Exception:
         pass
     return "em processamento"
 
 def gerar_resposta(pergunta: str, contexto: str) -> str:
-    # --- INÍCIO DA MELHORIA (Bloco Try) ---
+    """
+    Gera resposta via Gemini com tratamento de erro (Fallback) 
+    e log de governança.
+    """
+    # --- INÍCIO DA MELHORIA (Bloco Try para Robustez) ---
     try:
         prompt = f"""
         {SYSTEM_PROMPT}
@@ -36,18 +56,22 @@ def gerar_resposta(pergunta: str, contexto: str) -> str:
         )
         
         ai_response = response.text
+        
+        # Registro da interação para auditoria
         log_ai_interaction(pergunta, ai_response)
 
         return ai_response
 
-    # --- TRATAMENTO DE ERRO (Fallback) ---
-    
+    # --- TRATAMENTO DE ERRO (Fallback de Segurança) ---
     except Exception as e:
+        # Log interno do erro para o desenvolvedor
         print(f"Erro na IA: {e}")
+        
+        # Resposta amigável de fallback baseada nos dados reais do sistema
         status_atual = extrair_status_do_contexto(contexto)
+        
         return (
             f"Desculpe, tive um problema técnico para gerar uma resposta personalizada agora. "
             f"Mas consultando o sistema, vi que seu processo está com o status: **{status_atual}**. "
             f"Por favor, tente perguntar novamente em alguns instantes."
         )
-   
