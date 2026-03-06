@@ -1,5 +1,5 @@
 // src/App.tsx
-// Componente raiz do frontend YOUVISA Sprint 2
+// Componente raiz do frontend YOUVISA Sprint 3
 // Aqui só organizamos layout, estilo e integração entre os componentes.
 
 import React, { useEffect, useState } from "react";
@@ -101,7 +101,7 @@ const App: React.FC = () => {
               color: "#1f2d50",
             }}
           >
-            YOUVISA – Sprint 2
+            YOUVISA – Sprint 3
           </h1>
           <p style={{ margin: 0, color: "#6b7280", fontSize: 15 }}>
             Portal simplificado para envio e acompanhamento de documentos do

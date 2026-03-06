@@ -6,6 +6,9 @@ import uuid
 import os
 import smtplib
 from dotenv import load_dotenv
+from nlp.gemini_service import gerar_resposta
+from fastapi import Body
+
 
 # Carrega variáveis de .env (pasta backend ou backend/src)
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
@@ -302,6 +305,87 @@ def get_status():
         "tipos_faltando": tipos_faltando,
         "documentos": documents
     }
+
+
+# ----------------------CONTEXTO DO PROCESSO -------------------
+
+def montar_contexto_processo():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM documents ORDER BY created_at DESC")
+    rows = cursor.fetchall()
+
+    documents = [dict(zip(row.keys(), row)) for row in rows]
+
+    conn.close()
+
+    tipos_obrigatorios = [
+        "passaporte",
+        "comprovante_residencia",
+        "comprovante_financeiro",
+        "formulario"
+    ]
+
+    tipos_enviados = {
+        doc["type"]
+        for doc in documents
+        if doc["status"] == DocumentStatus.CONCLUIDO
+    }
+
+    tipos_faltando = [
+        t for t in tipos_obrigatorios if t not in tipos_enviados
+    ]
+
+    if not documents:
+        status_global = DocumentStatus.AGUARDANDO
+    else:
+        if any(doc["status"] == DocumentStatus.PENDENTE for doc in documents):
+            status_global = DocumentStatus.PENDENTE
+        else:
+            if tipos_faltando:
+                status_global = DocumentStatus.AGUARDANDO
+            else:
+                status_global = DocumentStatus.CONCLUIDO
+
+    return {
+        "status_global": status_global,
+        "tipos_faltando": tipos_faltando,
+        "documentos": documents
+    }
+
+
+# --------------------- CHAT IA GENERATIVA ---------------------
+
+@app.post("/chat")
+def chat(pergunta: str = Body(..., embed=True)):
+    contexto_dict = montar_contexto_processo()
+
+    documentos_texto = "\n".join(
+        [
+            f"- {doc['filename']} | tipo={doc['type']} | status={doc['status']}"
+            for doc in contexto_dict["documentos"]
+        ]
+    )
+
+    if not documentos_texto:
+        documentos_texto = "Nenhum documento enviado até o momento."
+
+    tipos_faltando = ", ".join(contexto_dict["tipos_faltando"])
+    if not tipos_faltando:
+        tipos_faltando = "nenhum"
+
+    contexto = f"""
+Status global do processo: {contexto_dict['status_global']}
+Tipos de documentos faltando: {tipos_faltando}
+
+Documentos registrados no sistema:
+{documentos_texto}
+"""
+
+    resposta = gerar_resposta(pergunta, contexto)
+
+    return {"resposta": resposta}
 
 
 # --------------------- EVENT SUBSCRIBE ---------------------
