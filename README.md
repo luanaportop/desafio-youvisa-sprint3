@@ -180,36 +180,70 @@ C --> J[Gerenciamento de<br/>Status do Processo]
 J --> B
 ```
 
-## Descrição das Camadas
+## 🧩 Descrição das Camadas
 
 ### 👤 Usuário
-O usuário interage com o sistema através da interface web, enviando documentos e realizando perguntas ao chatbot sobre o status do processo.
 
-### 💻 Frontend
-Desenvolvido em **React com TypeScript**, é responsável pela interface da aplicação, envio de documentos e interação com o chatbot.
+O usuário interage com o sistema através da interface web, realizando o envio de documentos e consultando o status do processo por meio do chatbot.
 
-### 🔗 API Backend
-Implementada em **FastAPI**, executada através do servidor **Uvicorn**, responsável por:
-
-- receber requisições do frontend
-- processar uploads de documentos
-- gerenciar o pipeline de validação
-- integrar o chatbot com o modelo de IA
-
-### ⚙ Pipeline de Validação
-Responsável por organizar o fluxo de processamento dos documentos enviados pelo usuário, incluindo verificação de tipo, consistência e classificação.
-
-### 🧠 Classificação de Documentos
-Utiliza técnicas de **Processamento de Linguagem Natural (NLP)** para identificar automaticamente o tipo de documento enviado.
-
-### 🤖 IA Generativa
-Integrada através da **API Google Gemini**, responsável por gerar respostas contextualizadas para o chatbot, considerando o estado atual do processo.
-
-### 🛡 Governança de IA
-Camada responsável pelo registro das interações da IA, garantindo rastreabilidade das respostas geradas e permitindo auditoria do comportamento do modelo.
 ---
 
-# 📂 Estrutura do Projeto
+### 💻 Frontend
+
+Desenvolvido em **React com TypeScript**, é responsável pela interface da aplicação, permitindo:
+
+- envio de documentos
+- interação com o chatbot
+- acompanhamento do status do processo
+
+---
+
+### 🔗 API Backend
+
+Implementada em **FastAPI** e executada através do servidor **Uvicorn**, responsável por:
+
+- receber requisições do frontend  
+- processar uploads de documentos  
+- gerenciar o pipeline de validação  
+- integrar o chatbot com o modelo de IA  
+
+---
+
+### ⚙️ Pipeline de Validação
+
+Responsável por organizar o fluxo de processamento dos documentos enviados pelo usuário, incluindo:
+
+- verificação do tipo de documento  
+- validação de consistência  
+- encaminhamento para classificação automática  
+
+---
+
+### 🧠 Classificação de Documentos
+
+Utiliza técnicas de **Processamento de Linguagem Natural (NLP)** para identificar automaticamente o tipo de documento enviado pelo usuário.
+
+---
+
+### 🤖 IA Generativa
+
+Integrada através da **API Google Gemini**, responsável por gerar respostas contextualizadas para o chatbot, considerando o estado atual do processo do usuário.
+
+---
+
+### 🛡️ Governança de IA
+
+Camada responsável pelo registro das interações da IA, garantindo:
+
+- rastreabilidade das respostas geradas  
+- transparência do comportamento do modelo  
+- suporte para auditoria das decisões da IA
+
+---
+
+# 📂 Estrutura de pastas
+
+```mermaid
 
 DESAFIO-YOUVISA-SPRINT3/
 
@@ -237,7 +271,7 @@ docs/
 └ sprint3/
 
 README.md
-
+```
 ---
 
 # ⚙️ Tecnologias Utilizadas
