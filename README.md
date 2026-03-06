@@ -125,31 +125,32 @@ Isso garante que o sistema continue funcional mesmo em caso de falha do modelo.
 
 # 📊 Diagrama de Estados do Processo
 
-Foi implementado um **diagrama de estados** que representa o fluxo completo do processo do usuário dentro da plataforma.
+Foi implementado um **diagrama de estados** que representa o fluxo completo do processo do usuário dentro da plataforma YOUVISA.
 
-Estados modelados:
+Esse fluxo permite acompanhar o ciclo de vida do envio e validação de documentos dentro do sistema.
 
-Processo iniciado
-↓
-Aguardando documentos
-↓
-Em validação
-↓
-Pendente de correção
-↓
-Em análise
-↓
-Processo finalizado
+## Estados do Processo
 
-Arquivo do diagrama: assets/diagramas/diagrama-estados-youvisa.png
+- Processo iniciado
+- Aguardando documentos
+- Em validação
+- Pendente de correção
+- Em análise
+- Processo finalizado
 
-Esse modelo facilita o entendimento do fluxo operacional do sistema.
+## Diagrama
+
+<p align="center">
+<img src="assets/diagramas/diagrama-estados-youvisa.png" width="700">
+</p>
+
+O diagrama acima representa o fluxo de estados utilizado pelo sistema para controlar o andamento do processo do usuário.
 
 ---
 
 # 🏗 Arquitetura Geral da Solução
 
-A arquitetura do YOUVISA integra diversas camadas do sistema:
+A arquitetura do YOUVISA integra diferentes camadas responsáveis pelo processamento do fluxo do usuário.
 
 Usuário
 ↓
