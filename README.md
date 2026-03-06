@@ -443,7 +443,7 @@ A solução demonstra como pipelines de automação, NLP, IA generativa e interf
 
 ---
 
-# 🗃 Histórico de lançamentos
+## 🗃 Histórico de lançamentos
 
 * 0.1.0 - 06/03/2026
     *
