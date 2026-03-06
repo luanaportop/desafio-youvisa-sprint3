@@ -361,10 +361,18 @@ Documentação da API:
 
 
 ## Frontend
-1. Acesse a pasta frontend: cd frontend
-2. Instale as dependências: npm install
-3. Execute a aplicação: npm run dev
-
+1. Acesse a pasta frontend:
+```bash
+   cd frontend
+```
+2. Instale as dependências:
+```bash
+   npm install
+```
+3. Execute a aplicação:
+```bash   
+   npm run dev
+```
 Acesse a interface web em:
 👉 http://localhost:5173/
 
@@ -454,7 +462,7 @@ A solução demonstra como pipelines de automação, NLP, IA generativa e interf
 ## 🗃 Histórico de lançamentos
 
 * 0.1.0 - 06/03/2026
-    *
+  
 
 ## 📋 Licença
 
