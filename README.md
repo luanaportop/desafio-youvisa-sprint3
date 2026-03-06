@@ -187,28 +187,17 @@ Esse modelo facilita a manutenção do sistema, permite escalabilidade e melhora
 
 ```mermaid
 graph TD
-    subgraph UI [Interface do Usuario]
-        A[Usuario] --> B[Frontend React / TypeScript]
-    end
-
-    subgraph Backend [Camada de API e Controle]
-        B --> C[FastAPI / Uvicorn]
-        C --> D{FSM: Maquina de Estados}
-        D -- Valido --> E[(SQLite: Banco de Dados)]
-        D -- Erro --> B
-    end
-
-    subgraph IA [Inteligencia e Visao]
-        C --> F[OpenCV: Validacao]
-        C --> G[Gemini 2.5 Flash: IA Real]
-        G --> H[Modulo de Governanca]
-        F --> D
-        H --> E
-    end
-
-    subgraph Saida [Comunicacao]
-        E --> I[Servico SMTP: Notificacoes]
-    end
+    A[Usuário] --> B[Frontend React]
+    B --> C[API FastAPI]
+    C --> D{FSM: Máquina de Estados}
+    D -- Válido --> E[(SQLite: Banco de Dados)]
+    D -- Erro --> B
+    C --> F[OpenCV: Validação Imagem]
+    C --> G[Gemini 2.5 Flash: IA Real]
+    G --> H[Módulo de Governança]
+    F --> D
+    H --> E
+    E --> I[Serviço SMTP: E-mail]
 ```
 
 ## 🧩 Descrição das Camadas
