@@ -7,6 +7,17 @@
 <br>
 
 # YOUVISA – Plataforma Inteligente de Atendimento Multicanal (Sprint3)
+
+## 🎯 Visão do Projeto
+
+O **YOUVISA** é uma plataforma inteligente de análise e validação de documentos que utiliza **Inteligência Artificial Generativa** para auxiliar usuários durante processos administrativos.
+
+O sistema permite que usuários enviem documentos, acompanhem o status do processo e interajam com um **chatbot inteligente**, que fornece respostas contextualizadas com base nas informações do sistema.
+
+A arquitetura da solução integra **Frontend web, API Backend, pipeline de validação de documentos, classificação automática com NLP e IA generativa através do Google Gemini**, além de mecanismos de **governança e rastreabilidade das interações da IA**.
+
+---
+
 ## Beginner Coders
 ## 👨‍🎓 Integrantes:
 - <a href="https://www.linkedin.com/in/luana-porto-pereira-gomes/">Luana Porto Pereira Gomes</a>
