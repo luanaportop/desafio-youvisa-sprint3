@@ -187,32 +187,28 @@ Esse modelo facilita a manutenção do sistema, permite escalabilidade e melhora
 
 ```mermaid
 graph TD
-    subgraph Client_Side [Interface do Usuário]
-        A[Usuário] --> B[Frontend React / TypeScript]
+    subgraph UI [Interface do Usuario]
+        A[Usuario] --> B[Frontend React / TypeScript]
     end
 
-    subgraph API_Layer [Camada de API & Controle]
+    subgraph Backend [Camada de API e Controle]
         B --> C[FastAPI / Uvicorn]
-        C --> D{FSM: Máquina de Estados}
-        D -- Transição Válida --> E[(SQLite: Banco de Dados)]
-        D -- Erro Lógico --> B
+        C --> D{FSM: Maquina de Estados}
+        D -- Valido --> E[(SQLite: Banco de Dados)]
+        D -- Erro --> B
     end
 
-    subgraph Intelligence_Layer [Camada de Inteligência & Visão]
-        C --> F[OpenCV: Validação de Nitidez]
+    subgraph IA [Inteligencia e Visao]
+        C --> F[OpenCV: Validacao]
         C --> G[Gemini 2.5 Flash: IA Real]
-        G --> H[Módulo de Governança: Auditoria]
+        G --> H[Modulo de Governanca]
         F --> D
         H --> E
     end
 
-    subgraph Notifications [Comunicação]
-        E --> I[Serviço SMTP: Notificações]
+    subgraph Saida [Comunicacao]
+        E --> I[Servico SMTP: Notificacoes]
     end
-
-    classDef tech fill:#f9f,stroke:#333,stroke-width:2px;
-    class E,G,H tech;
-```
 
 ## 🧩 Descrição das Camadas
 
