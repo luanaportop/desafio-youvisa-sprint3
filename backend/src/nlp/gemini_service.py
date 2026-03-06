@@ -34,11 +34,14 @@ def gerar_resposta(pergunta: str, contexto: str) -> str:
             model="gemini-2.5-flash",
             contents=prompt
         )
+        
+        ai_response = response.text
+        log_ai_interaction(pergunta, ai_response)
 
-<<<<<<< HEAD
-        return response.text
+        return ai_response
 
     # --- TRATAMENTO DE ERRO (Fallback) ---
+    
     except Exception as e:
         print(f"Erro na IA: {e}")
         status_atual = extrair_status_do_contexto(contexto)
@@ -47,9 +50,4 @@ def gerar_resposta(pergunta: str, contexto: str) -> str:
             f"Mas consultando o sistema, vi que seu processo está com o status: **{status_atual}**. "
             f"Por favor, tente perguntar novamente em alguns instantes."
         )
-=======
-    ai_response = response.text
-    log_ai_interaction(pergunta, ai_response)
-
-    return ai_response
->>>>>>> d18fc34 (Sprint 3: adicionado diagrama de estados YOUVISA)
+   
