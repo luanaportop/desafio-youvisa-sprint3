@@ -70,177 +70,158 @@ Para garantir boas práticas no uso da IA, foi implementado um módulo de **gove
 
 Arquivo responsável: backend/src/nlp/ai_governance.py
 
+Este módulo registra as interações da IA, incluindo:
 
+- pergunta do usuário
+- resposta gerada pelo modelo
+- rastreabilidade das respostas
 
-## 📌 Escopo do Protótipo
+Esse registro permite:
 
-### Fluxo principal simulado:
-- Upload de arquivos JPEG/PNG, com bloqueio de PDF;
-- Classificação automática baseada em NLP simbólico;
-- Identificação dos documentos faltantes;
-- Tratamento automático de pendências (arquivo inválido ou errado);
-- Simulação de IA Generativa para respostas do chatbot YOUVISA;
-- Chatbot com raciocínio contextual, baseado no status do processo;
-- Pipeline inspirado em arquiteturas de agentes LLM;
-- Simulação de RPA para envio automático de e-mails;
-- UI refinada com comportamento dinâmico e respostas condicionadas.
+- auditoria de comportamento da IA
+- análise futura das respostas
+- controle de qualidade das interações
 
----
-
-## 🧩 Simulações Inteligentes (NLP, IA Generativa, RPA)
-
-### NLP (Processamento de Linguagem Natural)
-O projeto utiliza NLP simbólico, totalmente integrado ao backend e ao chatbot, para:
-- interpretar mensagens como:
-“qual documento falta?”,
-“posso enviar PDF?”,
-“status do processo?”,
-“enviei o documento”.
-- classificar documentos pelo nome do arquivo usando dicionário semântico.
-
-O classificador identifica automaticamente:
-- Passaporte
-- Comprovante de residência
-- Comprovante financeiro
-- Formulário YOUVISA
+Essa prática segue princípios de **AI Governance utilizados em sistemas corporativos**.
 
 ---
 
-### 🤖 IA Generativa (Simulada)
-Embora não utilize modelos de linguagem reais (como OpenAI ou Gemini), o chatbot YOUVISA implementa comportamento generativo simulado, baseado nos conceitos ensinados pela FIAP:
-- respostas adaptadas ao contexto do processo
-- raciocínio condicional baseado no status_global
-- mensagens personalizadas
-- explicações estruturadas
-- interação humanizada
-- respostas dinâmicas, não fixas
-Exemplo:
-Se faltar somente o comprovante financeiro, o chatbot responde especificamente sobre esse documento.
-Se tudo estiver correto, ele celebra com o usuário.
+# 🔄 Pipeline de Resposta do Chatbot
+
+O fluxo de resposta do chatbot agora segue o seguinte pipeline:
+
+1️⃣ Usuário envia pergunta  
+
+2️⃣ Sistema coleta contexto do processo  
+
+3️⃣ Prompt estruturado é enviado ao modelo Gemini  
+
+4️⃣ Modelo gera resposta baseada no contexto  
+
+5️⃣ Resposta é registrada no módulo de governança  
+
+6️⃣ Chatbot retorna resposta ao usuário  
 
 ---
 
-### 🟦 RPA (Automação Robótica de Processos – Simulada)
-Implementamos um agente automático que:
-- recebe o documento
-- valida formato
-- classifica
-- identifica erros
-- atualiza status
-- dispara um e-mail automático (simulado via console))
-Essa função imita o comportamento de um robô corporativo, como os vistos em pipelines de RPA.
+# ⚠ Tratamento de Erros da IA
+
+Foi implementado um mecanismo de **fallback inteligente**.
+
+Caso ocorra falha na geração da resposta pela IA:
+
+- o sistema captura o erro
+- identifica o status atual do processo
+- responde ao usuário com base no status real
+
+Exemplo de fallback:
+
+> "Desculpe, tive um problema técnico ao gerar uma resposta personalizada agora.  
+> Mas consultando o sistema, vi que seu processo está com o status: **em análise**."
+
+Isso garante que o sistema continue funcional mesmo em caso de falha do modelo.
 
 ---
 
-## 🏗 Arquitetura Geral da Solução
+# 📊 Diagrama de Estados do Processo
 
-A arquitetura do YOUVISA oi construída para simular, de forma simples e funcional, o fluxo real de pré-análise de documentos para visto de turismo.
-O sistema integra frontend, backend, pipeline inteligente, NLP simbólico, chatbot contextual e simulação de automação (RPA) em um único fluxo contínuo.
+Foi implementado um **diagrama de estados** que representa o fluxo completo do processo do usuário dentro da plataforma.
 
-🔄 Visão Resumida do Fluxo
+Estados modelados:
 
-1. Usuário → Frontend (React + TS)
-   - Realiza upload de documentos, acompanha status e interage com o chatbot.
+Processo iniciado
+↓
+Aguardando documentos
+↓
+Em validação
+↓
+Pendente de correção
+↓
+Em análise
+↓
+Processo finalizado
 
-2. Frontend → API (FastAPI)
-   - Envia o arquivo para validação e recebe o status atualizado.
+Arquivo do diagrama: assets/diagramas/diagrama-estados-youvisa.png
 
-3. Pipeline do Backend
-   - Valida o formato da imagem (JPEG/PNG)
-   - Classifica o documento por regras de NLP
-   - Atualiza o status global do processo
-   - Identifica documentos faltantes
-   - Simula envio automático de e-mail (RPA)
-
-4. Frontend Atualiza a Interface
-   Exibe:
-   - documentos enviados
-   - pendências
-   - status geral
-   - mensagens do chatbot baseadas no estado atual
-
-5. Chatbot YOUVISA
-   Interpreta mensagens do usuário, entende intenções e responde de forma contextual, simulando comportamento de IA generativa
-
-   Fluxograma da Arquitetura
-
-<p align="center">
-  <img src="assets/diagramas/arquitetura-pipeline-youvisa-sprint2.drawio.png" width="85%">
-</p>
+Esse modelo facilita o entendimento do fluxo operacional do sistema.
 
 ---
 
-## 📂 Estrutura das Pastas
+# 🏗 Arquitetura Geral da Solução
 
-```
-DESAFIO-YOUVISA-SPRINT2/
-│── assets/
-│   ├── diagramas/
-│   ├── prints/
-│   └── logo-fiap.png
+A arquitetura do YOUVISA integra diversas camadas do sistema:
+
+Usuário
+↓
+Frontend (React + TypeScript)
+↓
+API Backend (FastAPI)
+↓
+Pipeline de validação de documentos
+↓
+Classificação de documentos (NLP)
+↓
+IA Generativa (Gemini)
+↓
+Governança de IA
+
+---
+
+# 📂 Estrutura do Projeto
+
+DESAFIO-YOUVISA-SPRINT3/
+
+assets/
+├ diagramas/
+│ └ diagrama-estados-youvisa.png
 │
-│── backend/
-│   ├── venv/
-│   ├── src/
-│   │   ├── api/
-│   │   │   └── router.py
-│   │   ├── email_service/
-│   │   │   └── sender.py
-│   │   ├── models/
-│   │   │   ├── document.py
-│   │   │   └── models.py
-│   │   ├── nlp/
-│   │   │   └── classifier.py
-│   │   ├── pipeline/
-│   │   │   ├── pipeline.py
-│   │   │   ├── processor.py
-│   │   │   └── repository.py
-│   │   ├── vision/
-│   │   │   └── validator.py
-│   │   └── main.py
-│   │   ├── uploads/
-│   ├── requirements.txt
-│   
-│── frontend/
-│   └── src/
-│   │   ├── assets/
-│   |   ├── components/
-|   |   |   ├── chatbot.tsx
-│   │   │   ├── statuspanel.tsx
-│   │   │   └── uploadarea.tsx
-│   |   ├── services/
-│   |   |   └── api.ts
-│── docs/
-│   ├── sprint2/
-|   |   ├── relatório-técnico
-│   |   └── escopo-fluxo-principal-youvisa-sprint2.md
+backend/
+└ src/
+├ api/
+├ models/
+├ nlp/
+│ ├ classifier.py
+│ ├ gemini_service.py
+│ └ ai_governance.py
 │
-└── README.md
+├ pipeline/
+├ vision/
+└ main.py
 
-```
+frontend/
+└ src/
+
+docs/
+└ sprint3/
+
+README.md
+
 ---
 
-## ⚙️ Tecnologias Utilizadas
-### Backend
+# ⚙️ Tecnologias Utilizadas
+
+## Backend
+
 - Python
 - FastAPI
+- Uvicorn (servidor ASGI para execução da API)
 - Pydantic
-- Uvicorn
+- Google Gemini API
 - NLP simbólico
 - Pipeline customizado
-- Simulação de e-mail (agente RPA)
+- SMTP (envio de e-mails automáticos de confirmação)
 
-### Frontend
+## Frontend
+
 - React
 - TypeScript
 - Vite
-- UI customizada e responsiva
 
 ---
 
-## 🚀 Como Executar o Projeto
+# 🚀 Como Executar o Projeto
 
-### Backend
+## Backend
 1. cd backend/src
 2. uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
@@ -248,7 +229,7 @@ Documentação da API:
 👉 http://localhost:8000/docs
 
 
-### Frontend
+## Frontend
 1. cd frontend
 2. npm install
 3. npm run dev
@@ -258,7 +239,7 @@ Acesse em:
 
 ---
 
-### 📤 Regras de Envio de Documentos
+## 📤 Regras de Envio de Documentos
 
 Formatos aceitos:
 - JPEG
@@ -268,133 +249,80 @@ Formatos rejeitados:
 - Qualquer outro formato inválido
 Ao enviar algo inválido:
 - Documento vira pendente
-- Usuário recebe e-mail simulado
 - Chatbot explica o motivo da rejeição
 
 ---
 
-### 🗂️ Classificação Automática de Documentos
+# 🤖 Chatbot YOUVISA
 
-O backend interpreta o nome do arquivo:
+O chatbot é capaz de:
 
-| Palavra no nome                  | Classificação |
-| -------------------------------- | ------------- |
-| "passaporte"                     | PASSAPORTE    |
-| "endereco", "residencia"         | RESIDÊNCIA    |
-| "financeiro", "extrato", "banco" | FINANCEIRO    |
-| "formulario"                     | FORMULÁRIO    |
-| Outra                            | DESCONHECIDO  |
-
----
-
-🤖 Chatbot YOUVISA (NLP + IA Generativa Simulada)
-
-O chatbot consegue:
-- interpretar mensagens naturais
-- entender intenções
-- responder dinamicamente
-- analisar o status atual
-- guiar o usuário em cada etapa
+- interpretar perguntas do usuário
+- consultar o estado do processo
+- identificar documentos pendentes
 - explicar pendências
-- identificar documentos faltantes
-- recusar PDFs
-- simular comportamento generativo
+- orientar o envio de documentos
+- responder perguntas sobre o processo
+- gerar respostas utilizando IA generativa
 
-Exemplos de intenções entendidas:
-“qual documento falta?”
-“quais documentos preciso enviar?”
-“posso enviar pdf?”
-“enviei o documento”
-“status do processo?”
+Exemplos de perguntas suportadas:
 
----
-
-### 📧 Simulação de E-mail (Agente RPA)
-Sempre que um documento é enviado:
-1. O pipeline processa
-2. A validação ocorre
-3. O tipo é classificado
-4. O status é atualizado
-5. O sistema "envia" um e-mail (no console)
-
-Exemplos:
-✔ “Documento validado com sucesso”
-❌ “Arquivo inválido, envie JPEG/PNG”
-🟠 “Documento não corresponde ao tipo esperado”
+- "Qual documento falta?"
+- "Qual o status do meu processo?"
+- "Posso enviar PDF?"
+- "Quais documentos preciso enviar?"
 
 ---
 
-## 🧪 Testes Realizados
+# 🧪 Testes Realizados
 
-### Testes funcionais:
-- upload de JPEG
-- upload de PDF (erro simulado)
-- envio parcial de documentos
-- envio completo
-- fluxo com pendências
-- fluxo com documentos faltantes
-- chatbot interpretando variadas intenções
+Foram realizados testes para validar:
 
-### Testes de UX:
-- feedback visual
-- mensagens dinâmicas
-- rolagem automática no chat
-- exibição clara do status_global
+### Upload de documentos
+- JPEG válido
+- PNG válido
+- PDF rejeitado
 
-### 🎨 UI/UX - Design e Experiência
+### Pipeline
+- classificação correta
+- detecção de documentos faltantes
+- atualização do status global
 
-Camada foi refinada com:
-- Layout minimalista
-- cores suaves
-- fonte de fácil leitura
-- chatbot elegante e responsivo
-- mensagens claras e amigaveis
-- foco no fluxo do usuário
+### Chatbot
+- interpretação de perguntas
+- geração de respostas pela IA
+- fallback em caso de erro
 
-## 📸 Evidências dos Testes (Prints)
+---
 
-Todas as capturas de tela realizadas durante os testes funcionais, de UX e de comportamento do chatbot estão disponíveis na pasta:
+# 🎥 Vídeo demonstrativo
 
-[📁 Pasta de Prints — Evidências de Testes](assets/prints)
+Disponível em: (link do vídeo da Sprint 3)
 
-Essa pasta contém imagens que demonstram:
-- uploads bem-sucedidos
-- rejeições de PDF
-- comportamento do pipeline
-- mudanças do status_global
-- respostas do chatbot YOUVISA
-- interface após cada fluxo de envio
+---
 
-## 🎥 Vídeo de Demonstração
+# 📄 Documentação da Sprint 3
 
-[📺 Clique aqui para assistir no YouTube](https://youtu.be/BUg4E6uACPo)
+- Diagrama de estados do processo
+- Código de governança de IA
+- Integração com IA generativa
+- Melhorias no chatbot
 
-### 🏁 Conclusão
+---
 
-Este protótipo demonstra, de forma clara e funcional, como um sistema real de análise documental pode operar combinando:
-- NLP simbólico
-- Simulação de IA Generativa
-- Simulação de RPA
-- Pipeline inteligente
-- Chatbot contextual
-- UX bem estruturada
-Nessa Sprint, cumprimos com os requisitos, entregando um produto coerente, funcional e alinhado às práticas ensinadas pela FIAP.
+# 🏁 Conclusão
 
-## 📄 Documentação da Sprint 2
+A Sprint 3 representa um avanço significativo na evolução do sistema YOUVISA.
 
-- **Escopo do Fluxo Principal:**  
-  [`docs/sprint2/escopo-fluxo-principal-youvisa-sprint2.md`](docs/sprint2/escopo-fluxo-principal-youvisa-sprint2.md)
+O projeto passou de uma simulação de IA para uma implementação com **modelo generativo real**, incorporando também práticas importantes de **governança de IA** e arquitetura de sistemas inteligentes.
 
-- **Arquitetura do Pipeline (fluxograma):**  
-  [`docs/sprint2/arquitetura-pipeline-youvisa.md`](docs/sprint2/arquitetura-pipeline-youvisa.md)
+A solução demonstra como pipelines de automação, NLP, IA generativa e interfaces modernas podem ser combinadas para criar experiências digitais inteligentes.
 
-- **Relatório Técnico:**  
-  [`docs/sprint2/relatorio-tecnico-sprint2.pdf`](docs/sprint2/relatorio-tecnico-sprint2.pdf)
+---
 
+# 🗃 Histórico de lançamentos
 
-## 🗃 Histórico de lançamentos
-
-* 0.1.0 - 28/11/2025
+* 0.1.0 - 06/03/2026
     *
 
 ## 📋 Licença
