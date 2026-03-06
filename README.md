@@ -186,27 +186,32 @@ Esse modelo facilita a manutenção do sistema, permite escalabilidade e melhora
 ### 🔷 Diagrama de Arquitetura do Sistema
 
 ```mermaid
-flowchart TD
+graph TD
+    subgraph Client_Side [Interface do Usuário]
+        A[Usuário] --> B[Frontend React / TypeScript]
+    end
 
-A[Usuário] --> B[Frontend React<br/>TypeScript]
+    subgraph API_Layer [Camada de API & Controle]
+        B --> C[FastAPI / Uvicorn]
+        C --> D{FSM: Máquina de Estados}
+        D -- Transição Válida --> E[(SQLite: Banco de Dados)]
+        D -- Erro Lógico --> B
+    end
 
-B --> C[API Backend<br/>FastAPI]
+    subgraph Intelligence_Layer [Camada de Inteligência & Visão]
+        C --> F[OpenCV: Validação de Nitidez]
+        C --> G[Gemini 2.5 Flash: IA Real]
+        G --> H[Módulo de Governança: Auditoria]
+        F --> D
+        H --> E
+    end
 
-C --> D[Servidor<br/>Uvicorn]
+    subgraph Notifications [Comunicação]
+        E --> I[Serviço SMTP: Notificações]
+    end
 
-D --> E[Pipeline de Validação<br/>de Documentos]
-
-E --> F[Classificação de<br/>Documentos NLP]
-
-F --> G[IA Generativa<br/>Gemini]
-
-G --> H[Governança de IA<br/>Registro de Interações]
-
-E --> I[Envio de Email<br/>de Confirmação SMTP]
-
-C --> J[Gerenciamento de<br/>Status do Processo]
-
-J --> B
+    classDef tech fill:#f9f,stroke:#333,stroke-width:2px;
+    class E,G,H tech;
 ```
 
 ## 🧩 Descrição das Camadas
