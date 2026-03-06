@@ -6,7 +6,7 @@
 
 <br>
 
-# YOUVISA – Plataforma Inteligente de Atendimento Multicanal (Sprint2)
+# YOUVISA – Plataforma Inteligente de Atendimento Multicanal (Sprint3)
 ## Beginner Coders
 ## 👨‍🎓 Integrantes:
 - <a href="https://www.linkedin.com/in/luana-porto-pereira-gomes/">Luana Porto Pereira Gomes</a>
@@ -22,40 +22,55 @@
 
 ---
 
-## 📘 Introdução
+# 📘 Introdução
 
-Este repositório reúne o protótipo funcional desenvolvido para a Sprint 2 do Enterprise Challenge – YOUVISA, cuja proposta é criar um sistema de análise inicial de documentos para solicitação de visto de turismo.
+Este repositório apresenta a evolução do projeto YOUVISA desenvolvido durante o **Enterprise Challenge da FIAP**, na **Sprint 3**.
 
-O projeto foi pensado como um MVP realista, simulando o comportamento de sistemas modernos que usam:
-- NLP (Processamento de Linguagem Natural)
-- IA Generativa (simulada)
-- Pipeline inteligente de decisão
-- RPA / Agente virtual
-- Validação automática de documentos
-- Chatbot orientado ao contexto do usuário
+O objetivo desta etapa foi **evoluir o protótipo da Sprint 2**, adicionando capacidades reais de **Inteligência Artificial Generativa**, além de implementar mecanismos de **governança de IA** e melhorias no pipeline do chatbot.
 
-Mesmo sem utilizar modelos generativos reais (como GPT, Claude, Gemini ou LLaMA), implementamos fielmente os conceitos ensinados pela FIAP, como:
-- interpretação de intenção,
-- aprendizado em contexto,
-- raciocínio baseado no estado atual,
-- respostas dinâmicas,
-- pipeline de processamento,
-- simulação de agente de e-mail,
-- simulação de generative prompting.
+Nesta versão, o sistema passa a utilizar **modelo real de IA (Google Gemini)** para geração de respostas contextualizadas, mantendo o pipeline inteligente de validação documental e o chatbot integrado ao estado atual do processo do usuário.
 
 ---
 
-## 🎯 Objetivo do Projeto
+# 🎯 Objetivo da Sprint 3
 
-Criar um sistema funcional e demonstrável que permita:
+A Sprint 3 teve como objetivo evoluir o sistema YOUVISA com:
 
-- o envio de documentos obrigatórios (passaporte, residência, financeiro e formulário);
-- validação automática do formato e classificação inteligente;
-- exibição do status do processo em tempo real;
-- simulação de envio de e-mail após uploads;
-- chatbot inteligente com comportamento semelhante a IA Generativa;
-- interface moderna, simples e orientada ao usuário;
-- fluxo de decisão inspirado em pipelines reais de IA e RPA.
+- Integração com **IA generativa real (Google Gemini)**
+- Implementação de **governança de IA**
+- Registro de interações da IA para auditoria
+- Melhoria do pipeline de resposta do chatbot
+- Tratamento de erros com fallback inteligente
+- Modelagem do **diagrama de estados do processo**
+- Respostas mais naturais e contextualizadas
+
+---
+
+# 🧠 Inteligência Artificial Generativa
+
+Diferente da Sprint 2, que utilizava **IA simulada**, nesta etapa o sistema passou a utilizar um **modelo real de linguagem generativa**.
+
+O backend integra o serviço: Google Gemini API
+
+Esse modelo é responsável por gerar respostas contextualizadas para o chatbot YOUVISA.
+
+O prompt enviado ao modelo contém:
+
+- regras de comportamento
+- contexto do processo do usuário
+- pergunta enviada pelo usuário
+
+Isso permite que a IA gere respostas mais naturais e adaptadas ao estado atual do processo.
+
+---
+
+# 🛡 Governança de IA
+
+Para garantir boas práticas no uso da IA, foi implementado um módulo de **governança de IA**.
+
+Arquivo responsável: backend/src/nlp/ai_governance.py
+
+
 
 ## 📌 Escopo do Protótipo
 
