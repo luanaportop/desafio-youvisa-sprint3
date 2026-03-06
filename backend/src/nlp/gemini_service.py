@@ -2,36 +2,45 @@ from google import genai
 
 client = genai.Client()
 
-SYSTEM_PROMPT = """
-Você é o assistente da plataforma YOUVISA.
+SYSTEM_PROMPT = """ ... seu prompt atual ... """
 
-Responda sempre em português do Brasil.
-Seja claro, objetivo e cordial.
-
-Regras:
-- use apenas as informações fornecidas no contexto do sistema
-- não invente documentos enviados
-- não invente status
-- se faltarem documentos, informe quais faltam
-- se todos os documentos estiverem concluídos, diga que o processo está em análise
-- não prometa aprovação de visto
-- caso a pergunta esteja fora do escopo da plataforma, responda educadamente que você só pode ajudar com envio de documentos e andamento do processo
-"""
+def extrair_status_do_contexto(contexto: str) -> str:
+    """Função auxiliar para o fallback buscar o status no texto do contexto"""
+    try:
+        # Busca a linha que contém o status global no bloco de texto enviado
+        for linha in contexto.split('\n'):
+            if "Status global" in linha:
+                return linha.split(':')[-1].strip()
+    except:
+        pass
+    return "em processamento"
 
 def gerar_resposta(pergunta: str, contexto: str) -> str:
-    prompt = f"""
-{SYSTEM_PROMPT}
+    # --- INÍCIO DA MELHORIA (Bloco Try) ---
+    try:
+        prompt = f"""
+        {SYSTEM_PROMPT}
 
-Contexto do sistema:
-{contexto}
+        Contexto do sistema:
+        {contexto}
 
-Pergunta do usuário:
-{pergunta}
-"""
+        Pergunta do usuário:
+        {pergunta}
+        """
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
 
-    return response.text
+        return response.text
+
+    # --- TRATAMENTO DE ERRO (Fallback) ---
+    except Exception as e:
+        print(f"Erro na IA: {e}")
+        status_atual = extrair_status_do_contexto(contexto)
+        return (
+            f"Desculpe, tive um problema técnico para gerar uma resposta personalizada agora. "
+            f"Mas consultando o sistema, vi que seu processo está com o status: **{status_atual}**. "
+            f"Por favor, tente perguntar novamente em alguns instantes."
+        )
