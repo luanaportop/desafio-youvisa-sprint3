@@ -20,8 +20,8 @@ A arquitetura da solução integra **Frontend web, API Backend, pipeline de vali
 
 ---
 
-## Beginner Coders
-## 👨‍🎓 Integrantes:
+## 👨‍💻 Equipe de Desenvolvimento
+### Integrantes:
 - <a href="https://www.linkedin.com/in/luana-porto-pereira-gomes/">Luana Porto Pereira Gomes</a>
 - <a href="https://www.linkedin.com/in/luma-x">Luma Oliveira</a>
 - <a href="https://www.linkedin.com/in/priscilla-oliveira-023007333/">Priscilla Oliveira </a>
