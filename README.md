@@ -159,23 +159,23 @@ Esse modelo facilita a manutenção do sistema, permite escalabilidade e melhora
 ```mermaid
 flowchart TD
 
-A[Usuário] --> B[Frontend React + TypeScript]
+A[Usuário] --> B[Frontend React<br/>TypeScript]
 
-B --> C[API Backend FastAPI]
+B --> C[API Backend<br/>FastAPI]
 
-C --> D[Servidor Uvicorn]
+C --> D[Servidor<br/>Uvicorn]
 
-D --> E[Pipeline de Validação\nde Documentos]
+D --> E[Pipeline de Validação<br/>de Documentos]
 
-E --> F[Classificação\nde Documentos NLP]
+E --> F[Classificação de<br/>Documentos NLP]
 
-F --> G[IA Generativa\nGemini]
+F --> G[IA Generativa<br/>Gemini]
 
-G --> H[Governança de IA\ne Registro de Interações]
+G --> H[Governança de IA<br/>Registro de Interações]
 
-E --> I[Envio de Email\nde Confirmação SMTP]
+E --> I[Envio de Email<br/>de Confirmação SMTP]
 
-C --> J[Gerenciamento de\nStatus do Processo]
+C --> J[Gerenciamento de<br/>Status do Processo]
 
 J --> B
 ```
