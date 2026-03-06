@@ -215,7 +215,15 @@ Responsável por organizar o fluxo de processamento dos documentos enviados pelo
 
 - verificação do tipo de documento  
 - validação de consistência  
-- encaminhamento para classificação automática  
+- encaminhamento para classificação automática
+
+---
+
+### 📧 Serviço de Notificação por Email
+
+Responsável por enviar comunicações automáticas ao usuário durante o processo, incluindo o **email de confirmação do envio dos documentos**.
+
+O serviço garante que o usuário seja informado sobre o andamento do processo, melhorando a experiência de uso da plataforma.
 
 ---
 
@@ -240,6 +248,8 @@ Camada responsável pelo registro das interações da IA, garantindo:
 - suporte para auditoria das decisões da IA
 
 ---
+
+Essas camadas trabalham de forma integrada para garantir que o processo de análise de documentos ocorra de forma automática, segura e transparente para o usuário.
 
 # 📂 Estrutura de pastas
 
@@ -296,20 +306,58 @@ README.md
 
 # 🚀 Como Executar o Projeto
 
+## Pré-requisitos
+
+⚠️ Este projeto requer uma chave da API Google Gemini para funcionamento do chatbot.
+
+Antes de executar o projeto, certifique-se de ter instalado:
+
+- **Python 3.10+**
+- **Node.js 18+**
+- **npm**
+- **Git**
+
+---
+
+## 🔑 Configuração da API do Gemini
+
+Este projeto utiliza **IA Generativa através da API Google Gemini**.  
+Para executar o chatbot é necessário configurar uma chave de API.
+
+1. Gere uma chave no Google AI Studio:
+
+👉 https://aistudio.google.com/app/apikey
+
+2. Configure a variável de ambiente no sistema.
+
+### Linux / Mac
+```bash
+export GEMINI_API_KEY="sua_chave_aqui"
+```
+
+### Windows (PowerShell)
+```bash
+setx GEMINI_API_KEY "sua_chave_aqui"
+```
+Após definir a variável, reinicie o terminal.
+
+---
+
 ## Backend
-1. cd backend/src
-2. uvicorn main:app --reload --host 0.0.0.0 --port 8000
+1. Acesse a pasta do backend: cd backend/src
+2. Instale as dependências do projeto: pip install fastapi uvicorn google-genai python-multipart
+3. Execute o servidor: uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 Documentação da API:
 👉 http://localhost:8000/docs
 
 
 ## Frontend
-1. cd frontend
-2. npm install
-3. npm run dev
+1. Acesse a pasta frontend: cd frontend
+2. Instale as dependências: npm install
+3. Execute a aplicação: npm run dev
 
-Acesse em:
+Acesse a interface web em:
 👉 http://localhost:5173/
 
 ---
