@@ -199,6 +199,7 @@ graph TD
     H --> E
     E --> I[Serviço SMTP: E-mail]
 ```
+A arquitetura foi desenhada para garantir o desacoplamento entre a geração de respostas pela IA e a validação lógica do processo, utilizando uma FSM (Finite State Machine) como camada de segurança de dados.
 
 ## 🧩 Descrição das Camadas
 
