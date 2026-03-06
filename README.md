@@ -150,22 +150,66 @@ O diagrama acima representa o fluxo de estados utilizado pelo sistema para contr
 
 # 🏗 Arquitetura Geral da Solução
 
-A arquitetura do YOUVISA integra diferentes camadas responsáveis pelo processamento do fluxo do usuário.
+A plataforma **YOUVISA** foi projetada utilizando uma arquitetura em camadas, separando interface, processamento de dados, inteligência artificial e governança.
 
-Usuário
-↓
-Frontend (React + TypeScript)
-↓
-API Backend (FastAPI)
-↓
-Pipeline de validação de documentos
-↓
-Classificação de documentos (NLP)
-↓
-IA Generativa (Gemini)
-↓
-Governança de IA
+Esse modelo facilita a manutenção do sistema, permite escalabilidade e melhora a organização do fluxo de processamento.
 
+## 🔷 Diagrama de Arquitetura do Sistema
+
+```mermaid
+flowchart TD
+
+A[Usuário] --> B[Frontend<br>React + TypeScript]
+
+B --> C[API Backend<br>FastAPI]
+
+C --> D[Servidor ASGI<br>Uvicorn]
+
+D --> E[Pipeline de Validação de Documentos]
+
+E --> F[Classificação de Documentos<br>NLP]
+
+F --> G[IA Generativa<br>Google Gemini]
+
+G --> H[Governança de IA<br>Registro de Interações]
+
+E --> I[Envio de E-mail de Confirmação<br>SMTP]
+
+C --> J[Gerenciamento de Status do Processo]
+
+J --> B
+
+´´´
+
+
+
+## Descrição das Camadas
+
+### 👤 Usuário
+O usuário interage com o sistema através da interface web, enviando documentos e realizando perguntas ao chatbot sobre o status do processo.
+
+### 💻 Frontend
+Desenvolvido em **React com TypeScript**, é responsável pela interface da aplicação, envio de documentos e interação com o chatbot.
+
+### 🔗 API Backend
+Implementada em **FastAPI**, executada através do servidor **Uvicorn**, responsável por:
+
+- receber requisições do frontend
+- processar uploads de documentos
+- gerenciar o pipeline de validação
+- integrar o chatbot com o modelo de IA
+
+### ⚙ Pipeline de Validação
+Responsável por organizar o fluxo de processamento dos documentos enviados pelo usuário, incluindo verificação de tipo, consistência e classificação.
+
+### 🧠 Classificação de Documentos
+Utiliza técnicas de **Processamento de Linguagem Natural (NLP)** para identificar automaticamente o tipo de documento enviado.
+
+### 🤖 IA Generativa
+Integrada através da **API Google Gemini**, responsável por gerar respostas contextualizadas para o chatbot, considerando o estado atual do processo.
+
+### 🛡 Governança de IA
+Camada responsável pelo registro das interações da IA, garantindo rastreabilidade das respostas geradas e permitindo auditoria do comportamento do modelo.
 ---
 
 # 📂 Estrutura do Projeto
