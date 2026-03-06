@@ -16,6 +16,8 @@ O sistema permite que usuários enviem documentos, acompanhem o status do proces
 
 A arquitetura da solução integra **Frontend web, API Backend, pipeline de validação de documentos, classificação automática com NLP e IA generativa através do Google Gemini**, além de mecanismos de **governança e rastreabilidade das interações da IA**.
 
+> Plataforma experimental desenvolvida no contexto do **Enterprise Challenge FIAP**, explorando o uso de IA generativa para automação de processos documentais.
+
 ---
 
 ## Beginner Coders
