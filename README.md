@@ -84,7 +84,22 @@ Esse registro permite:
 
 Essa prática segue princípios de **AI Governance utilizados em sistemas corporativos**.
 
+
+## 🔐 LGPD e Proteção de Dados
+
+O sistema foi projetado considerando princípios da **Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018)**.
+
+Como a plataforma lida com documentos enviados pelos usuários, foram consideradas boas práticas de tratamento de dados, incluindo:
+
+- processamento apenas das informações necessárias para o fluxo do sistema  
+- uso das informações exclusivamente para análise do processo do usuário  
+- registro de interações da IA para fins de rastreabilidade e auditoria  
+
+Em um ambiente de produção, medidas adicionais seriam implementadas, como criptografia de dados sensíveis, controle de acesso e políticas de retenção de dados.
+
+
 ---
+
 
 # 🔄 Pipeline de Resposta do Chatbot
 
