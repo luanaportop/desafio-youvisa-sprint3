@@ -1,3 +1,40 @@
+from fastapi import FastAPI, File, UploadFile, HTTPException, Body
+from fastapi.middleware.cors import CORSMiddleware
+import uuid
+import os
+from datetime import datetime
+from dotenv import load_dotenv
+
+# 1. Imports dos seus modelos e serviços
+from models.document import Document, DocumentStatus
+from nlp.gemini_service import gerar_resposta
+from database.init_db import init_db
+from database.db import get_connection
+from document_validation import validate_image
+from events.event_bus import publish, subscribe
+from notifications.status_notification import handle_status_change
+
+# 2. Inicialização do App 
+app = FastAPI(
+    title="YOUVISA Sprint 3 - Backend",
+    version="1.0.0"
+)
+
+# 3. Inicialização do Banco e Pastas
+init_db()
+UPLOADS_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+os.makedirs(UPLOADS_DIR, exist_ok=True)
+
+# 4. Middleware (CORS)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.post("/upload")
 async def upload_document(file: UploadFile = File(...)):
     file_extension = file.filename.split(".")[-1].lower()
