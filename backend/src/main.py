@@ -14,6 +14,9 @@ from document_validation import validate_image
 from events.event_bus import publish, subscribe
 from notifications.status_notification import handle_status_change
 
+# Carrega variáveis de ambiente
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
+
 # 2. Inicialização do App 
 app = FastAPI(
     title="YOUVISA Sprint 3 - Backend",
@@ -23,7 +26,11 @@ app = FastAPI(
 # 3. Inicialização do Banco e Pastas
 init_db()
 UPLOADS_DIR = os.path.join(os.path.dirname(__file__), "uploads")
-os.makedirs(UPLOADS_DIR, exist_ok=True)
+
+def ensure_uploads_dir():
+    os.makedirs(UPLOADS_DIR, exist_ok=True)
+
+ensure_uploads_dir()
 
 # 4. Middleware (CORS)
 app.add_middleware(
@@ -34,6 +41,59 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# 5. Funções Auxiliares
+def detectar_tipo_documento(filename: str) -> str:
+    name = filename.lower()
+    if "passaporte" in name or "passport" in name:
+        return "passaporte"
+    if "residencia" in name or "residência" in name or "endereco" in name or "endereço" in name:
+        return "comprovante_residencia"
+    if "financeiro" in name or "renda" in name or "banc" in name:
+        return "comprovante_financeiro"
+    if "formulario" in name:
+        return "formulario"
+    return "desconhecido"
+
+# --------------------- ROTAS GET  ---------------------
+
+@app.get("/")
+def root():
+    return {"message": "YOUVISA API running"}
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+@app.get("/status")
+def get_status():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM documents ORDER BY created_at DESC")
+    rows = cursor.fetchall()
+    documents = [dict(zip(row.keys(), row)) for row in rows]
+    conn.close()
+
+    tipos_obrigatorios = ["passaporte", "comprovante_residencia", "comprovante_financeiro", "formulario"]
+    tipos_enviados = {doc["type"] for doc in documents if doc["status"] == "CONCLUIDO"}
+    tipos_faltando = [t for t in tipos_obrigatorios if t not in tipos_enviados]
+
+    # Lógica de Status Global
+    if not documents:
+        global_status = "AGUARDANDO_DOCUMENTOS"
+    elif any(doc["status"] == "PENDENTE_CORRECAO" for doc in documents):
+        global_status = "PENDENTE_CORRECAO"
+    elif tipos_faltando:
+        global_status = "EM_ANALISE"
+    else:
+        global_status = "CONCLUIDO"
+
+    return {
+        "status_global": global_status,
+        "tipos_faltando": tipos_faltando,
+        "documentos": documents
+    }
+
+# --------------------- ROTAS POST (Upload e Chat) ---------------------
 
 @app.post("/upload")
 async def upload_document(file: UploadFile = File(...)):
@@ -59,23 +119,17 @@ async def upload_document(file: UploadFile = File(...)):
     reason = ""
     if is_image:
         valid, reason = validate_image(file_path)
-        # Se a imagem é válida, ela vai para EM_ANALISE (individual) antes de CONCLUIDO
         status_proposto = DocumentStatus.CONCLUIDO if valid else DocumentStatus.PENDENTE_CORRECAO
     else:
         status_proposto = DocumentStatus.PENDENTE_CORRECAO
         reason = "Formato inválido. Use JPG ou PNG."
 
-    # 2. VERIFICAÇÃO DA FSM (Corrigida)
+    # 2. VERIFICAÇÃO DA FSM
     from process.fsm import validar_transicao
+    status_base = "AGUARDANDO_DOCUMENTOS"
     
-    # O status inicial de um novo documento no fluxo é sempre AGUARDANDO_VALIDACAO
-    status_base = DocumentStatus.AGUARDANDO_VALIDACAO.value
-    
-    # Validamos se o documento pode ir de "Aguardando" para o status proposto
     if not validar_transicao(status_base, status_proposto.value):
-        # Fallback: Se a FSM barrar o CONCLUIDO direto, tentamos colocar em AGUARDANDO_VALIDACAO
         status_proposto = DocumentStatus.AGUARDANDO_VALIDACAO
-        reason = "Documento recebido, aguardando processamento da fila."
 
     # 3. Criação e Persistência
     document = Document(
@@ -96,9 +150,23 @@ async def upload_document(file: UploadFile = File(...)):
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (document.id, document.filename, document.type, document.status.value, 
               document.created_at, document.validation_reason, file_path))
-        
         conn.commit()
     finally:
         conn.close()
 
+    publish("STATUS_CHANGED", document.model_dump())
     return document
+
+@app.post("/chat")
+def chat(pergunta: str = Body(..., embed=True)):
+    # Reutiliza a lógica de status para o contexto da IA
+    status_data = get_status()
+    contexto = f"""
+    Status global: {status_data['status_global']}
+    Documentos faltando: {', '.join(status_data['tipos_faltando'])}
+    """
+    resposta = gerar_resposta(pergunta, contexto)
+    return {"resposta": resposta}
+
+# Inscrição de eventos
+subscribe("STATUS_CHANGED", handle_status_change)
