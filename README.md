@@ -457,7 +457,7 @@ Foram realizados testes para validar:
 
 # 🎥 Vídeo demonstrativo
 
-Disponível em: (link do vídeo da Sprint 3)
+Disponível em: (https://youtu.be/b7g8UXx_qT4)
 
 ---
 
